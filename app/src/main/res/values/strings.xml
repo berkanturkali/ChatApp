@@ -3,4 +3,8 @@
     <string name="login">Login</string>
     <string name="email">Email</string>
     <string name="password">Password</string>
+    <string name="signup">Signup</string>
+    <string name="firstname">Firstname</string>
+    <string name="lastName">Lastname</string>
+    <string name="Interests">Interests</string>
 </resources>
