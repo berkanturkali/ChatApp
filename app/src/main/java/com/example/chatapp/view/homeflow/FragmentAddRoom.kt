@@ -65,4 +65,9 @@ class FragmentAddRoom : Fragment(R.layout.fragment_add_room_layout) {
             }
         }
     }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
 }

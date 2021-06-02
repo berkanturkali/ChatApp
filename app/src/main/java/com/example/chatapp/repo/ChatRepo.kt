@@ -12,4 +12,6 @@ class ChatRepo @Inject constructor(
     private val api: ChatApi
 ) : BaseService() {
     suspend fun addRoom(room: Room) = apiCall { api.addRoom(room) }
+
+    suspend fun getRooms() = apiCall { api.rooms() }
 }

@@ -25,4 +25,7 @@ interface ChatApi {
         @Body room: Room
     ): Response<String>
 
+    @GET("chat/room/all")
+    suspend fun rooms(): Response<List<Room>>
+
 }
