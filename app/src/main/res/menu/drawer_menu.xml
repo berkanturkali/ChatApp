@@ -15,6 +15,13 @@
             android:title="@string/chats"
             app:showAsAction="ifRoom|withText" />
         <item
+            android:id="@+id/add_room"
+            android:checked="true"
+            android:icon="@drawable/ic_room"
+            android:menuCategory="secondary"
+            android:title="Add Room"
+            app:showAsAction="ifRoom|withText" />
+        <item
             android:id="@+id/profile"
             android:checkable="true"
             android:icon="@drawable/ic_person"

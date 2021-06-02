@@ -1,5 +1,6 @@
 package com.example.chatapp.network
 
+import com.example.chatapp.model.Room
 import com.example.chatapp.model.TokenResponse
 import com.example.chatapp.model.User
 import com.google.gson.JsonObject
@@ -18,5 +19,10 @@ interface ChatApi {
 
     @GET("account/me")
     suspend fun getMe(): Response<User>
+
+    @POST("chat/room/new")
+    suspend fun addRoom(
+        @Body room: Room
+    ): Response<String>
 
 }

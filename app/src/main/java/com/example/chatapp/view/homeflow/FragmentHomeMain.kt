@@ -9,7 +9,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.NavigationUI
-
 import com.example.chatapp.R
 import com.example.chatapp.databinding.FragmentHomeMainLayoutBinding
 import com.example.chatapp.model.User
@@ -87,7 +86,7 @@ class FragmentHomeMain : Fragment(R.layout.fragment_home_main_layout) {
         val navView = binding.navView
         val toolbar = binding.drawerToolbar
         val navGraphIds =
-            listOf(R.navigation.chats, R.navigation.profile)
+            listOf(R.navigation.chats, R.navigation.add_room, R.navigation.profile)
         val controller = navView.setupWithNavController(
             navGraphIds = navGraphIds,
             fragmentManager = childFragmentManager,
