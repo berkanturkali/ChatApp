@@ -66,7 +66,11 @@ class FragmentLogin : Fragment(R.layout.fragment_login_layout) {
                     activityViewModel,
                     resource,
                     {
-                        storageManager.setTokenAndMail(resource.data!!.token, resource.data.email)
+                        storageManager.setTokenAndMail(
+                            resource.data!!.token,
+                            resource.data.email,
+                            resource.data.fullname
+                        )
                         navigateToHome()
                     },
                     {

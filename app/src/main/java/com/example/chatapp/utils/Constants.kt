@@ -14,5 +14,6 @@ object Constants {
     const val NETWORK_PAGE_SIZE = 50
     const val INITIAL_PAGE = 1
     const val EMAIL = "email"
+    const val FULL_NAME = "fullname"
     const val TIME_PATTERN = "HH:mm"
 }
