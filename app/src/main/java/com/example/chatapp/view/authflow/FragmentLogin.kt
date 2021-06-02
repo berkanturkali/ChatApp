@@ -5,6 +5,7 @@ import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.example.chatapp.R
 import com.example.chatapp.databinding.FragmentLoginLayoutBinding
 import com.example.chatapp.utils.*
@@ -13,6 +14,7 @@ import com.example.chatapp.viewmodel.authflow.FragmentLoginViewModel
 import com.google.gson.JsonObject
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
+
 @AndroidEntryPoint
 class FragmentLogin : Fragment(R.layout.fragment_login_layout) {
 
@@ -65,7 +67,7 @@ class FragmentLogin : Fragment(R.layout.fragment_login_layout) {
                     resource,
                     {
                         storageManager.setTokenAndMail(resource.data!!.token, resource.data.email)
-                        binding.root.showSnack(R.color.colorSuccess, "Success")
+                        navigateToHome()
                     },
                     {
                         binding.root.showSnack(message = resource.message!!)
@@ -73,6 +75,10 @@ class FragmentLogin : Fragment(R.layout.fragment_login_layout) {
                 )
             }
         }
+    }
+
+    private fun navigateToHome() {
+        findNavController().navigate(R.id.action_fragmentLogin_to_fragmentHomeMain)
     }
 
     private fun login() {

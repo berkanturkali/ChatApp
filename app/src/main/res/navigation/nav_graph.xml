@@ -8,8 +8,8 @@
     <fragment
         android:id="@+id/fragmentAuthMain"
         android:name="com.example.chatapp.view.authflow.FragmentAuthMain"
-        tools:layout="@layout/fragment_auth_main_layout"
-        android:label="FragmentAuthMain">
+        android:label="FragmentAuthMain"
+        tools:layout="@layout/fragment_auth_main_layout">
         <action
             android:id="@+id/action_fragmentAuthMain_to_fragmentSignup"
             app:destination="@id/fragmentSignup"
@@ -30,12 +30,27 @@
         android:id="@+id/fragmentSignup"
         android:name="com.example.chatapp.view.authflow.FragmentSignup"
         android:label="FragmentSignup"
-        tools:layout="@layout/fragment_signup_layout"/>
+        tools:layout="@layout/fragment_signup_layout" />
 
     <fragment
         android:id="@+id/fragmentLogin"
         android:name="com.example.chatapp.view.authflow.FragmentLogin"
         android:label="FragmentLogin"
-        tools:layout="@layout/fragment_login_layout"/>
+        tools:layout="@layout/fragment_login_layout">
+        <action
+            android:id="@+id/action_fragmentLogin_to_fragmentHomeMain"
+            app:destination="@id/fragmentHomeMain"
+            app:popUpTo="@id/fragmentLogin"
+            app:popUpToInclusive="true"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragmentHomeMain"
+        android:name="com.example.chatapp.view.homeflow.FragmentHomeMain"
+        android:label="FragmentHomeMain"
+        tools:layout="@layout/fragment_home_main_layout" />
 
 </navigation>

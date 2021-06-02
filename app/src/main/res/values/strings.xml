@@ -7,4 +7,8 @@
     <string name="firstname">Firstname</string>
     <string name="lastName">Lastname</string>
     <string name="Interests">Interests</string>
+    <string name="chats">Chats</string>
+    <string name="logout">Logout</string>
+    <string name="profile">Profile</string>
+    <string name="enter_message">Enter Message</string>
 </resources>

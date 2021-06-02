@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/chats"
+    app:startDestination="@id/fragmentChats">
+
+    <fragment
+        android:id="@+id/fragmentChats"
+        tools:layout="@layout/fragment_chats_layout"
+        android:name="com.example.chatapp.view.homeflow.FragmentChats"
+        android:label="Chats" />
+</navigation>
