@@ -5,6 +5,7 @@ import com.example.chatapp.BuildConfig
 
 object Constants {
     const val BASE_URL = BuildConfig.BASE_URL
+    const val SOCKET_URL = BuildConfig.SOCKET_URL
     const val TIME_OUT = 3000L
     const val CONNECTION_TIMEOUT: Long = 30L
     const val READ_TIMEOUT: Long = 30L

@@ -5,17 +5,22 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <include
+        android:id="@+id/room_header"
+        layout="@layout/header_layout"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/room_rv"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        tools:listitem="@layout/room_item_layout"
         android:orientation="horizontal"
         android:scrollbars="horizontal"
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/room_header"
+        tools:listitem="@layout/room_item_layout" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/message_rv"

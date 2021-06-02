@@ -2,18 +2,21 @@ package com.example.chatapp.di
 
 import android.content.Context
 import android.content.Intent
-import com.example.chatapp.view.MainActivity
 import com.example.chatapp.network.ChatApi
+import com.example.chatapp.utils.Constants
 import com.example.chatapp.utils.Constants.BASE_URL
 import com.example.chatapp.utils.Constants.CONNECTION_TIMEOUT
 import com.example.chatapp.utils.Constants.READ_TIMEOUT
 import com.example.chatapp.utils.Constants.WRITE_TIMEOUT
 import com.example.chatapp.utils.StorageManager
+import com.example.chatapp.view.MainActivity
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import io.socket.client.IO
+import io.socket.client.Socket
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.Request
@@ -86,5 +89,11 @@ object AppModule {
     @Provides
     fun provideRetroApi(retrofit: Retrofit): ChatApi {
         return retrofit.create(ChatApi::class.java)
+    }
+
+    @Singleton
+    @Provides
+    fun provideSocket(): Socket {
+        return IO.socket(Constants.SOCKET_URL)
     }
 }

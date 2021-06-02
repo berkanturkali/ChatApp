@@ -11,7 +11,10 @@ import androidx.navigation.ui.NavigationUI
 import com.example.chatapp.R
 import com.example.chatapp.databinding.FragmentHomeMainLayoutBinding
 import com.example.chatapp.utils.setupWithNavController
-
+import dagger.hilt.android.AndroidEntryPoint
+import io.socket.client.Socket
+import javax.inject.Inject
+@AndroidEntryPoint
 class FragmentHomeMain : Fragment(R.layout.fragment_home_main_layout) {
 
     private var _binding: FragmentHomeMainLayoutBinding? = null
@@ -23,6 +26,9 @@ class FragmentHomeMain : Fragment(R.layout.fragment_home_main_layout) {
     private var drawerSelectedItemId = R.id.chats
     private lateinit var title: String
 
+    @Inject
+    lateinit var socket: Socket
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentHomeMainLayoutBinding.bind(view)
@@ -32,6 +38,7 @@ class FragmentHomeMain : Fragment(R.layout.fragment_home_main_layout) {
         headerView = binding.navView.getHeaderView(0)
         setupDrawer()
         setBackPressedHandler()
+        socket.connect()
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
