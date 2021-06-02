@@ -13,4 +13,5 @@ class UserRepo @Inject constructor(
 ) : BaseService() {
     suspend fun signup(user: User) = apiCall { api.signup(user) }
     suspend fun login(credentials : JsonObject) = apiCall { api.login(credentials) }
+    suspend fun getMe() = apiCall { api.getMe() }
 }
