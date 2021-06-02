@@ -24,10 +24,10 @@ class FragmentAuthMain : Fragment(R.layout.fragment_auth_main_layout) {
     private fun initButtons() {
         binding.apply {
             signupBtn.setOnClickListener {
-
+                navigateToDest(R.id.action_fragmentAuthMain_to_fragmentSignup)
             }
             loginBtn.setOnClickListener {
-
+                navigateToDest(R.id.action_fragmentAuthMain_to_fragmentLogin)
             }
         }
     }
