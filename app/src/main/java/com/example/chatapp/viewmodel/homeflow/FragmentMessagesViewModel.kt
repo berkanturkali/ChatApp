@@ -4,8 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.chatapp.model.Room
-
+import com.example.chatapp.model.Message
 import com.example.chatapp.repo.ChatRepo
 import com.example.chatapp.utils.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -14,16 +13,16 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class FragmentRoomsViewModel @Inject constructor(
+class FragmentMessagesViewModel @Inject constructor(
     private val repo: ChatRepo
 ) : ViewModel() {
 
-    private val _rooms = MutableLiveData<Resource<List<Room>>>()
-    val rooms: LiveData<Resource<List<Room>>> get() = _rooms
+    private val _history = MutableLiveData<Resource<List<Message>>>()
+    val history: LiveData<Resource<List<Message>>> get() = _history
 
-    fun getRooms() {
+    fun getHistory(room: String) {
         viewModelScope.launch(Dispatchers.Main) {
-            _rooms.value = repo.getRooms()
+            _history.value = repo.getHistory(room)
         }
     }
 }

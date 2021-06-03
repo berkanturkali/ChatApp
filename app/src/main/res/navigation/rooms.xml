@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rooms"
+    app:startDestination="@id/fragmentRooms">
+
+    <fragment
+        android:id="@+id/fragmentRooms"
+        android:name="com.example.chatapp.view.homeflow.FragmentRooms"
+        android:label="Rooms"
+        tools:layout="@layout/fragment_rooms_layout">
+        <action
+            android:id="@+id/action_fragmentRooms_to_fragmentMessages"
+            app:destination="@id/fragmentMessages"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragmentMessages"
+        android:label=""
+        android:name="com.example.chatapp.view.homeflow.FragmentMessages"
+        tools:layout="@layout/fragment_messages_layout">
+
+        <argument
+            android:name="room"
+            app:argType="string" />
+    </fragment>
+</navigation>

@@ -30,7 +30,7 @@ class FragmentHomeMain : Fragment(R.layout.fragment_home_main_layout) {
     private lateinit var drawerLayout: DrawerLayout
     private lateinit var headerView: View
     private val drawerSelectedItemIdKey = "DRAWER_SELECTED_ITEM_ID_KEY"
-    private var drawerSelectedItemId = R.id.chats
+    private var drawerSelectedItemId = R.id.rooms
     private lateinit var title: String
 
     @Inject
@@ -86,7 +86,7 @@ class FragmentHomeMain : Fragment(R.layout.fragment_home_main_layout) {
         val navView = binding.navView
         val toolbar = binding.drawerToolbar
         val navGraphIds =
-            listOf(R.navigation.chats, R.navigation.add_room, R.navigation.profile)
+            listOf(R.navigation.rooms, R.navigation.add_room, R.navigation.profile)
         val controller = navView.setupWithNavController(
             navGraphIds = navGraphIds,
             fragmentManager = childFragmentManager,

@@ -14,4 +14,6 @@ class ChatRepo @Inject constructor(
     suspend fun addRoom(room: Room) = apiCall { api.addRoom(room) }
 
     suspend fun getRooms() = apiCall { api.rooms() }
+
+    suspend fun getHistory(room:String) = apiCall { api.getHistory(room) }
 }

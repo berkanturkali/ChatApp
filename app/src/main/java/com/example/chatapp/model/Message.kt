@@ -1,7 +1,8 @@
 package com.example.chatapp.model
 
 data class Message(
-    val message:String,
-    val sender:String,
-    val room:String
+    val message: String,
+    val sender: String,
+    val room: String,
+    var createdAt: Long = 0
 )

@@ -14,7 +14,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class FragmentHomeMainViewModel @Inject constructor(
-    private val repo:UserRepo
+    private val repo: UserRepo
 ) : ViewModel() {
 
     private val _me = MutableLiveData<Resource<User>>()

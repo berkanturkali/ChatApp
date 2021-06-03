@@ -10,6 +10,7 @@ import com.example.chatapp.databinding.MessageFromItemLayoutBinding
 import com.example.chatapp.databinding.MessageToItemLayoutBinding
 import com.example.chatapp.model.Message
 import com.example.chatapp.utils.StorageManager
+import com.example.chatapp.utils.getDate
 
 class MessagesAdapter(val storageManager: StorageManager) :
     ListAdapter<Message, RecyclerView.ViewHolder>(MESSAGE_COMPARATOR) {
@@ -31,8 +32,9 @@ class MessagesAdapter(val storageManager: StorageManager) :
         fun bind(message: Message) {
             binding.apply {
                 textGchatDateOther.visibility = View.GONE
-                textGchatUserOther.text = storageManager.getFullname()
+                textGchatUserOther.text = message.sender
                 textGchatMessageOther.text = message.message
+                textGchatTimestampOther.text = message.createdAt.getDate()
             }
         }
     }
@@ -43,6 +45,7 @@ class MessagesAdapter(val storageManager: StorageManager) :
             binding.apply {
                 textGchatDateMe.visibility = View.GONE
                 textGchatMessageMe.text = message.message
+                textGchatTimestampMe.text = message.createdAt.getDate()
             }
         }
     }

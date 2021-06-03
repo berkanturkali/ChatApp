@@ -8,11 +8,11 @@
         android:id="@+id/drawerGroup"
         android:checkableBehavior="single">
         <item
-            android:id="@+id/chats"
+            android:id="@+id/rooms"
             android:checked="true"
             android:icon="@drawable/ic_chats"
             android:menuCategory="secondary"
-            android:title="@string/chats"
+            android:title="@string/rooms"
             app:showAsAction="ifRoom|withText" />
         <item
             android:id="@+id/add_room"
