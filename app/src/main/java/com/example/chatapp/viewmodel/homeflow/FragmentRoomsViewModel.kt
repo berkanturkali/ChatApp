@@ -14,7 +14,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class FragmentChatsViewModel @Inject constructor(
+class FragmentRoomsViewModel @Inject constructor(
     private val repo: ChatRepo
 ) : ViewModel() {
 

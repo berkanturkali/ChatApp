@@ -1,38 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
-
-    <include
-        android:id="@+id/room_header"
-        layout="@layout/header_layout"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/room_rv"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:scrollbars="horizontal"
-        android:background="@drawable/divider"
-        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/room_header"
-        tools:listitem="@layout/room_item_layout" />
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/message_rv"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        tools:listitem="@layout/message_to_item_layout"
         app:layout_constraintBottom_toTopOf="@+id/chat_rl"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/room_rv" />
-
+        app:layout_constraintTop_toTopOf="parent"
+        tools:listitem="@layout/message_to_item_layout" />
 
     <RelativeLayout
         android:id="@+id/chat_rl"
@@ -50,9 +31,9 @@
             android:layout_alignParentStart="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="8dp"
-            android:maxLines="1"
             android:layout_toStartOf="@+id/send_msg_btn"
             android:hint="@string/enter_message"
+            android:maxLines="1"
             android:paddingLeft="12dp" />
 
         <ImageButton

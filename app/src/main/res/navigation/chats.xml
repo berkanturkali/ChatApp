@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/fragmentChats"
-        tools:layout="@layout/fragment_chats_layout"
+        tools:layout="@layout/fragment_rooms_layout"
         android:name="com.example.chatapp.view.homeflow.FragmentChats"
         android:label="Chats" />
 </navigation>

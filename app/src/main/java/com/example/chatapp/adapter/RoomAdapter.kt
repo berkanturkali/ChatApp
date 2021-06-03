@@ -8,7 +8,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.chatapp.databinding.RoomItemLayoutBinding
 import com.example.chatapp.model.Room
 
-class RoomAdapter : ListAdapter<Room, RoomAdapter.RoomViewHolder>(ROOM_COMPARATOR) {
+class RoomAdapter(private val onClickListener: OnRoomClick) :
+    ListAdapter<Room, RoomAdapter.RoomViewHolder>(ROOM_COMPARATOR) {
 
     companion object {
         val ROOM_COMPARATOR = object : DiffUtil.ItemCallback<Room>() {
@@ -36,11 +37,27 @@ class RoomAdapter : ListAdapter<Room, RoomAdapter.RoomViewHolder>(ROOM_COMPARATO
 
     inner class RoomViewHolder(private val binding: RoomItemLayoutBinding) :
         RecyclerView.ViewHolder(binding.root) {
+        init {
+            binding.root.setOnClickListener {
+                val position = bindingAdapterPosition
+                if (position != RecyclerView.NO_POSITION) {
+                    val item = getItem(position)
+                    item?.let {
+                        onClickListener.onRoomItemClick(it)
+                    }
+                }
+            }
+        }
+
         fun bind(room: Room) {
             binding.apply {
                 roomTv.text = room.name
             }
         }
+    }
+
+    interface OnRoomClick {
+        fun onRoomItemClick(room: Room)
     }
 }
 
