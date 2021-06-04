@@ -16,4 +16,5 @@ object Constants {
     const val EMAIL = "email"
     const val FULL_NAME = "fullname"
     const val TIME_PATTERN = "HH:mm"
+    const val DATE_PATTERN = "dd/MM/yyyy"
 }

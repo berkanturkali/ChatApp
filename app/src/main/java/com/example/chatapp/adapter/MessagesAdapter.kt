@@ -10,8 +10,8 @@ import com.example.chatapp.databinding.JoinItemLayoutBinding
 import com.example.chatapp.databinding.MessageFromItemLayoutBinding
 import com.example.chatapp.databinding.MessageToItemLayoutBinding
 import com.example.chatapp.model.Message
-import com.example.chatapp.utils.StorageManager
-import com.example.chatapp.utils.getDate
+import com.example.chatapp.utils.*
+import java.util.*
 
 class MessagesAdapter(val storageManager: StorageManager) :
     ListAdapter<Message, RecyclerView.ViewHolder>(MESSAGE_COMPARATOR) {
@@ -37,7 +37,38 @@ class MessagesAdapter(val storageManager: StorageManager) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(message: Message.TextMessage) {
             binding.apply {
-                textGchatDateOther.visibility = View.GONE
+                val date: String = when {
+                    isToday(message.createdAt) -> {
+                        "Today"
+                    }
+                    isYesterday(message.createdAt) -> {
+                        "Yesterday"
+                    }
+                    else -> {
+                        message.createdAt.getDate(Constants.DATE_PATTERN)
+                    }
+                }
+                val calender = Calendar.getInstance()
+                calender.timeInMillis = message.createdAt
+                val mDate = calender.get(Calendar.DAY_OF_MONTH)
+                if (bindingAdapterPosition > 0) {
+                    var position = bindingAdapterPosition
+                    do {
+                        position -= 1
+                    } while (getItem(position) !is Message.TextMessage)
+                    val previousMessage =
+                        getItem(position) as Message.TextMessage
+                    calender.timeInMillis = (previousMessage.createdAt)
+                    val prevDate = calender.get(Calendar.DAY_OF_MONTH)
+                    if (mDate > prevDate) {
+                        textGchatDateOther.visibility = View.VISIBLE
+                    } else {
+                        textGchatDateOther.visibility = View.GONE
+                    }
+                } else {
+                    textGchatDateOther.visibility = View.VISIBLE
+                }
+                textGchatDateOther.text = date
                 textGchatUserOther.text = message.sender
                 textGchatMessageOther.text = message.message
                 textGchatTimestampOther.text = message.createdAt.getDate()
@@ -49,9 +80,43 @@ class MessagesAdapter(val storageManager: StorageManager) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(message: Message.TextMessage) {
             binding.apply {
-                textGchatDateMe.visibility = View.GONE
-                textGchatMessageMe.text = message.message
-                textGchatTimestampMe.text = message.createdAt.getDate()
+                binding.apply {
+                    val date: String = when {
+                        isToday(message.createdAt) -> {
+                            "Today"
+                        }
+                        isYesterday(message.createdAt) -> {
+                            "Yesterday"
+                        }
+                        else -> {
+                            message.createdAt.getDate(Constants.DATE_PATTERN)
+                        }
+                    }
+                    val calender = Calendar.getInstance()
+                    calender.timeInMillis = message.createdAt
+                    val mDate = calender.get(Calendar.DAY_OF_MONTH)
+                    if (bindingAdapterPosition > 0) {
+                        var position = bindingAdapterPosition
+                        do {
+                            position -= 1
+                        } while (getItem(position) !is Message.TextMessage)
+                        val previousMessage =
+                            getItem(position) as Message.TextMessage
+                        calender.timeInMillis = (previousMessage.createdAt)
+                        val prevDate = calender.get(Calendar.DAY_OF_MONTH)
+                        if (mDate > prevDate) {
+                            textGchatDateMe.visibility = View.VISIBLE
+                        } else {
+                            textGchatDateMe.visibility = View.GONE
+                        }
+                    } else {
+                        textGchatDateMe.visibility = View.VISIBLE
+                    }
+
+                    textGchatDateMe.text = date
+                    textGchatMessageMe.text = message.message
+                    textGchatTimestampMe.text = message.createdAt.getDate()
+                }
             }
         }
     }
@@ -105,8 +170,8 @@ class MessagesAdapter(val storageManager: StorageManager) :
                         (holder as SenderViewHolder).bind(it)
                     }
                 }
-                is Message.LogMessage->{
-                    if(it.type == "join" || it.type =="leave"){
+                is Message.LogMessage -> {
+                    if (it.type == "join" || it.type == "leave") {
                         (holder as JoinViewHolder).bind(it)
                     }
                 }
