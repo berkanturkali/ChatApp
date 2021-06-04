@@ -12,7 +12,6 @@ import com.example.chatapp.databinding.FragmentRoomsLayoutBinding
 import com.example.chatapp.model.Room
 import com.example.chatapp.utils.handleResource
 import com.example.chatapp.utils.showSnack
-import com.example.chatapp.viewmodel.homeflow.FragmentHomeMainViewModel
 import com.example.chatapp.viewmodel.homeflow.FragmentRoomsViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -44,7 +43,6 @@ class FragmentRooms : Fragment(R.layout.fragment_rooms_layout), RoomAdapter.OnRo
             setHasFixedSize(true)
         }
     }
-
 
     private fun subscribeObservers() {
         mViewModel.rooms.observe(viewLifecycleOwner) {

@@ -33,6 +33,6 @@ interface ChatApi {
     @GET("chat/room/{room}")
     suspend fun getHistory(
         @Path("room") room: String
-    ): Response<List<Message>>
+    ): Response<List<Message.TextMessage>>
 
 }

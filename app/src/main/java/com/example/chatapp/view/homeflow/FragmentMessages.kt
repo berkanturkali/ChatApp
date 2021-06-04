@@ -21,6 +21,8 @@ import io.socket.client.Socket
 import java.util.*
 import javax.inject.Inject
 
+private const val TAG = "FragmentMessages"
+
 @AndroidEntryPoint
 class FragmentMessages : Fragment(R.layout.fragment_messages_layout) {
 
@@ -44,14 +46,16 @@ class FragmentMessages : Fragment(R.layout.fragment_messages_layout) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentMessagesLayoutBinding.bind(view)
-        mViewModel.getHistory(args.room)
+        initMessageRv()
         joinRoom(args.room)
+        mViewModel.getHistory(args.room)
         listenMessages()
         initButtons()
-        initMessageRv()
+
         requireParentFragment().requireParentFragment().requireView()
             .findViewById<TextView>(R.id.drawer_toolbar_title).text = args.room
         subscribeObservers()
+
     }
 
     private fun subscribeObservers() {
@@ -82,7 +86,7 @@ class FragmentMessages : Fragment(R.layout.fragment_messages_layout) {
     private fun initButtons() {
         binding.sendMsgBtn.setOnClickListener {
             val message =
-                Message(
+                Message.TextMessage(
                     binding.messageEt.text.toString().trim(),
                     storageManager.getEmail()!!,
                     args.room,
@@ -90,12 +94,13 @@ class FragmentMessages : Fragment(R.layout.fragment_messages_layout) {
                 )
             socket.emit("messageToServer", gson.toJson(message))
             binding.messageEt.setText("")
+
         }
     }
 
     private fun listenMessages() {
         socket.on("messageToClient") {
-            val receivedMessage = gson.fromJson(it[0].toString(), Message::class.java)
+            val receivedMessage = gson.fromJson(it[0].toString(), Message.TextMessage::class.java)
             messages.add(receivedMessage)
             messagesAdapter.submitList(messages)
             messagesAdapter.notifyItemInserted(messages.size - 1)
@@ -108,12 +113,26 @@ class FragmentMessages : Fragment(R.layout.fragment_messages_layout) {
 
     private fun joinRoom(room: String) {
         socket.emit("roomToJoin", room)
+        socket.on("joinEvent") { message ->
+            val logMessage =
+                gson.fromJson(message[0].toString(), Message.LogMessage::class.java)
+            if ("${storageManager.getFullname()} has joined" != logMessage.content) {
+                messages.add(logMessage)
+                messagesAdapter.submitList(messages)
+                messagesAdapter.notifyItemInserted(messages.size - 1)
+                binding.messageRv.post {
+                    binding.messageRv.scrollToPosition(messagesAdapter.itemCount - 1)
+                }
+            }
+
+        }
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
         socket.off("messageToClient")
+        socket.off("joinEvent")
         messages.clear()
     }
 }

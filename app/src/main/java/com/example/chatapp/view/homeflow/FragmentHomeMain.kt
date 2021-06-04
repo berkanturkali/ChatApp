@@ -12,6 +12,7 @@ import androidx.navigation.ui.NavigationUI
 import com.example.chatapp.R
 import com.example.chatapp.databinding.FragmentHomeMainLayoutBinding
 import com.example.chatapp.model.User
+import com.example.chatapp.utils.StorageManager
 import com.example.chatapp.utils.handleResource
 import com.example.chatapp.utils.setupWithNavController
 import com.example.chatapp.utils.showSnack
@@ -34,7 +35,11 @@ class FragmentHomeMain : Fragment(R.layout.fragment_home_main_layout) {
     private lateinit var title: String
 
     @Inject
+    lateinit var storageManager: StorageManager
+
+    @Inject
     lateinit var socket: Socket
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -47,6 +52,9 @@ class FragmentHomeMain : Fragment(R.layout.fragment_home_main_layout) {
         setupDrawer()
         setBackPressedHandler()
         socket.connect()
+        socket.on(Socket.EVENT_CONNECT) {
+            socket.emit("setUser", storageManager.getFullname())
+        }
         subscribeObservers()
     }
 

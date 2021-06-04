@@ -17,8 +17,8 @@ class FragmentMessagesViewModel @Inject constructor(
     private val repo: ChatRepo
 ) : ViewModel() {
 
-    private val _history = MutableLiveData<Resource<List<Message>>>()
-    val history: LiveData<Resource<List<Message>>> get() = _history
+    private val _history = MutableLiveData<Resource<List<Message.TextMessage>>>()
+    val history: LiveData<Resource<List<Message.TextMessage>>> get() = _history
 
     fun getHistory(room: String) {
         viewModelScope.launch(Dispatchers.Main) {
