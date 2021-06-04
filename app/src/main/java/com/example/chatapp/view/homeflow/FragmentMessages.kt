@@ -124,15 +124,28 @@ class FragmentMessages : Fragment(R.layout.fragment_messages_layout) {
                     binding.messageRv.scrollToPosition(messagesAdapter.itemCount - 1)
                 }
             }
-
+        }
+        socket.on("leaveEvent"){message->
+            val logMessage =
+                gson.fromJson(message[0].toString(), Message.LogMessage::class.java)
+            if ("${storageManager.getFullname()} has left" != logMessage.content) {
+                messages.add(logMessage)
+                messagesAdapter.submitList(messages)
+                messagesAdapter.notifyItemInserted(messages.size - 1)
+                binding.messageRv.post {
+                    binding.messageRv.scrollToPosition(messagesAdapter.itemCount - 1)
+                }
+            }
         }
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+        socket.emit("leaveEvent",args.room)
         socket.off("messageToClient")
         socket.off("joinEvent")
+        socket.off("leaveEvent")
         messages.clear()
     }
 }

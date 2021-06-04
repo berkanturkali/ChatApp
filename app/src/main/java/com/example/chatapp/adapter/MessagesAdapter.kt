@@ -106,7 +106,7 @@ class MessagesAdapter(val storageManager: StorageManager) :
                     }
                 }
                 is Message.LogMessage->{
-                    if(it.type == "join"){
+                    if(it.type == "join" || it.type =="leave"){
                         (holder as JoinViewHolder).bind(it)
                     }
                 }
