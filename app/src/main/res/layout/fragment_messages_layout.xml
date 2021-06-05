@@ -5,6 +5,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <include
+        android:id="@+id/header_layout"
+        layout="@layout/header_layout"/>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/message_rv"
         android:layout_width="0dp"
@@ -12,7 +16,7 @@
         app:layout_constraintBottom_toTopOf="@+id/chat_rl"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/header_layout"
         tools:listitem="@layout/message_to_item_layout" />
 
     <RelativeLayout

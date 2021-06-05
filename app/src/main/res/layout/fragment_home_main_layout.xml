@@ -48,19 +48,6 @@
                     android:textStyle="bold"
                     tools:text="Test" />
 
-                <ImageView
-                    android:id="@+id/clear_chat_ib"
-                    android:layout_width="wrap_content"
-                    android:foreground="?android:attr/selectableItemBackground"
-                    android:layout_height="wrap_content"
-                    android:clickable="true"
-                    android:src="@drawable/ic_delete"
-                    android:layout_gravity="end|center_vertical"
-                    android:layout_marginEnd="8dp"
-                    android:background="@android:color/transparent"
-                    android:focusable="true" />
-
-
             </com.google.android.material.appbar.CollapsingToolbarLayout>
 
             <androidx.fragment.app.FragmentContainerView

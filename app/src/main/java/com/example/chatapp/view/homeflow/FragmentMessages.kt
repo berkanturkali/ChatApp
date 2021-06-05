@@ -5,6 +5,7 @@ import android.view.View
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.chatapp.R
@@ -14,11 +15,12 @@ import com.example.chatapp.model.Message
 import com.example.chatapp.utils.StorageManager
 import com.example.chatapp.utils.handleResource
 import com.example.chatapp.utils.showSnack
-import com.example.chatapp.viewmodel.homeflow.FragmentHomeMainViewModel
 import com.example.chatapp.viewmodel.homeflow.FragmentMessagesViewModel
 import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
 import io.socket.client.Socket
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import java.util.*
 import javax.inject.Inject
 
@@ -44,20 +46,19 @@ class FragmentMessages : Fragment(R.layout.fragment_messages_layout) {
 
     private val mViewModel by viewModels<FragmentMessagesViewModel>()
 
-    private val homeViewModel by viewModels<FragmentHomeMainViewModel>(ownerProducer = { requireParentFragment().requireParentFragment() })
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentMessagesLayoutBinding.bind(view)
         initMessageRv()
         joinRoom(args.room)
+        updateMembers()
         mViewModel.getHistory(args.room)
         listenMessages()
         initButtons()
-
         requireParentFragment().requireParentFragment().requireView()
             .findViewById<TextView>(R.id.drawer_toolbar_title).text = args.room
         subscribeObservers()
+
     }
 
     private fun subscribeObservers() {
@@ -73,18 +74,14 @@ class FragmentMessages : Fragment(R.layout.fragment_messages_layout) {
                 }
             )
         }
-        homeViewModel.isClicked.observe(viewLifecycleOwner) {
-            it.getContentIfNotHandled()?.let { clicked ->
-                if (clicked) {
-                    clearChat()
-                }
-            }
-        }
     }
 
-    private fun clearChat() {
-        messages.clear()
-        messagesAdapter.notifyDataSetChanged()
+    private fun updateMembers() {
+        socket.on("updateMembers") {
+            lifecycleScope.launch(Dispatchers.Main) {
+                binding.headerLayout.headerTv.text = it[0].toString()
+            }
+        }
     }
 
     private fun initMessageRv() {
@@ -160,6 +157,7 @@ class FragmentMessages : Fragment(R.layout.fragment_messages_layout) {
         socket.off("messageToClient")
         socket.off("joinEvent")
         socket.off("leaveEvent")
+        socket.off("updateMembers")
         messages.clear()
     }
 }

@@ -1,5 +1,7 @@
 package com.example.chatapp.adapter
 
+import android.graphics.Color
+import android.text.method.LinkMovementMethod
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -112,7 +114,7 @@ class MessagesAdapter(val storageManager: StorageManager) :
                     } else {
                         textGchatDateMe.visibility = View.VISIBLE
                     }
-
+                    textGchatMessageMe.setLinkTextColor(Color.WHITE)
                     textGchatDateMe.text = date
                     textGchatMessageMe.text = message.message
                     textGchatTimestampMe.text = message.createdAt.getDate()
