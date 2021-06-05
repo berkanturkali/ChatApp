@@ -14,6 +14,7 @@ import com.example.chatapp.model.Message
 import com.example.chatapp.utils.StorageManager
 import com.example.chatapp.utils.handleResource
 import com.example.chatapp.utils.showSnack
+import com.example.chatapp.viewmodel.homeflow.FragmentHomeMainViewModel
 import com.example.chatapp.viewmodel.homeflow.FragmentMessagesViewModel
 import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
@@ -43,6 +44,8 @@ class FragmentMessages : Fragment(R.layout.fragment_messages_layout) {
 
     private val mViewModel by viewModels<FragmentMessagesViewModel>()
 
+    private val homeViewModel by viewModels<FragmentHomeMainViewModel>(ownerProducer = { requireParentFragment().requireParentFragment() })
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentMessagesLayoutBinding.bind(view)
@@ -55,7 +58,6 @@ class FragmentMessages : Fragment(R.layout.fragment_messages_layout) {
         requireParentFragment().requireParentFragment().requireView()
             .findViewById<TextView>(R.id.drawer_toolbar_title).text = args.room
         subscribeObservers()
-
     }
 
     private fun subscribeObservers() {
@@ -71,6 +73,18 @@ class FragmentMessages : Fragment(R.layout.fragment_messages_layout) {
                 }
             )
         }
+        homeViewModel.isClicked.observe(viewLifecycleOwner) {
+            it.getContentIfNotHandled()?.let { clicked ->
+                if (clicked) {
+                    clearChat()
+                }
+            }
+        }
+    }
+
+    private fun clearChat() {
+        messages.clear()
+        messagesAdapter.notifyDataSetChanged()
     }
 
     private fun initMessageRv() {
@@ -125,7 +139,7 @@ class FragmentMessages : Fragment(R.layout.fragment_messages_layout) {
                 }
             }
         }
-        socket.on("leaveEvent"){message->
+        socket.on("leaveEvent") { message ->
             val logMessage =
                 gson.fromJson(message[0].toString(), Message.LogMessage::class.java)
             if ("${storageManager.getFullname()} has left" != logMessage.content) {
@@ -142,7 +156,7 @@ class FragmentMessages : Fragment(R.layout.fragment_messages_layout) {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-        socket.emit("leaveEvent",args.room)
+        socket.emit("leaveEvent", args.room)
         socket.off("messageToClient")
         socket.off("joinEvent")
         socket.off("leaveEvent")

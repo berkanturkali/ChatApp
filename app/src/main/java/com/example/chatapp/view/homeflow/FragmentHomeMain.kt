@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.TextView
 import androidx.activity.addCallback
+import androidx.core.view.isVisible
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -56,6 +57,9 @@ class FragmentHomeMain : Fragment(R.layout.fragment_home_main_layout) {
             socket.emit("setUser", storageManager.getFullname())
         }
         subscribeObservers()
+        binding.clearChatIb.setOnClickListener {
+            mViewModel.isClicked(true)
+        }
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -113,6 +117,7 @@ class FragmentHomeMain : Fragment(R.layout.fragment_home_main_layout) {
             navController.addOnDestinationChangedListener { _, destination, _ ->
                 title = destination.label.toString()
                 binding.drawerToolbarTitle.text = title
+                binding.clearChatIb.isVisible = destination.id == R.id.fragmentMessages
             }
         }
     }

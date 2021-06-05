@@ -6,6 +6,7 @@ import com.example.chatapp.model.Room
 import com.example.chatapp.network.ChatApi
 import com.example.chatapp.utils.BaseService
 import com.example.chatapp.utils.Resource
+import okhttp3.MultipartBody
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -13,7 +14,7 @@ import javax.inject.Singleton
 class ChatRepo @Inject constructor(
     private val api: ChatApi
 ) : BaseService() {
-    suspend fun addRoom(room: Room) = apiCall { api.addRoom(room) }
+    suspend fun addRoom(room: Room,body:MultipartBody.Part?) = apiCall { api.addRoom(room,body) }
 
     suspend fun getRooms() = apiCall { api.rooms() }
 

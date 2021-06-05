@@ -5,11 +5,9 @@ import com.example.chatapp.model.Room
 import com.example.chatapp.model.TokenResponse
 import com.example.chatapp.model.User
 import com.google.gson.JsonObject
+import okhttp3.MultipartBody
 import retrofit2.Response
-import retrofit2.http.Body
-import retrofit2.http.GET
-import retrofit2.http.POST
-import retrofit2.http.Path
+import retrofit2.http.*
 
 interface ChatApi {
 
@@ -22,9 +20,11 @@ interface ChatApi {
     @GET("account/me")
     suspend fun getMe(): Response<User>
 
+    @Multipart
     @POST("chat/room/new")
     suspend fun addRoom(
-        @Body room: Room
+        @Part("room") room: Room,
+        @Part image: MultipartBody.Part? = null
     ): Response<String>
 
     @GET("chat/room/all")

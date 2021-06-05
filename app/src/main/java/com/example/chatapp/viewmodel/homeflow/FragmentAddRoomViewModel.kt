@@ -13,6 +13,7 @@ import com.example.chatapp.utils.isValid
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import okhttp3.MultipartBody
 import javax.inject.Inject
 
 private const val TAG = "FragmentAddRoomViewMode"
@@ -32,9 +33,9 @@ class FragmentAddRoomViewModel @Inject constructor(
         _isValid.value = Event(room.isValid())
     }
 
-    fun addRoom(room: Room) {
+    fun addRoom(room: Room,body:MultipartBody.Part?) {
         viewModelScope.launch(Dispatchers.Main) {
-            _roomInfo.value = Event(repo.addRoom(room))
+            _roomInfo.value = Event(repo.addRoom(room,body))
         }
     }
 }

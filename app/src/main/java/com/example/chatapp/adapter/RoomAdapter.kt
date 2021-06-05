@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.chatapp.databinding.RoomItemLayoutBinding
 import com.example.chatapp.model.Room
+import com.example.chatapp.utils.load
 
 class RoomAdapter(private val onClickListener: OnRoomClick) :
     ListAdapter<Room, RoomAdapter.RoomViewHolder>(ROOM_COMPARATOR) {
@@ -52,6 +53,7 @@ class RoomAdapter(private val onClickListener: OnRoomClick) :
         fun bind(room: Room) {
             binding.apply {
                 roomTv.text = room.name
+                roomIv.load("images/rooms/${room.image}")
             }
         }
     }
