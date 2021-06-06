@@ -19,7 +19,7 @@ import io.socket.client.Socket
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class FragmentHomeMain : Fragment(R.layout.fragment_home_main_layout),OnLogoutClick {
+class FragmentHomeMain : Fragment(R.layout.fragment_home_main_layout), OnLogoutClick {
 
     private var _binding: FragmentHomeMainLayoutBinding? = null
     private val binding get() = _binding!!
@@ -126,6 +126,11 @@ class FragmentHomeMain : Fragment(R.layout.fragment_home_main_layout),OnLogoutCl
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        socket.disconnect()
     }
 
     override fun onLogoutClick() {
