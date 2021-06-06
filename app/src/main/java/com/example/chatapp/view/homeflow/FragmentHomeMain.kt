@@ -12,17 +12,14 @@ import androidx.navigation.ui.NavigationUI
 import com.example.chatapp.R
 import com.example.chatapp.databinding.FragmentHomeMainLayoutBinding
 import com.example.chatapp.model.User
-import com.example.chatapp.utils.StorageManager
-import com.example.chatapp.utils.handleResource
-import com.example.chatapp.utils.setupWithNavController
-import com.example.chatapp.utils.showSnack
+import com.example.chatapp.utils.*
 import com.example.chatapp.viewmodel.homeflow.FragmentHomeMainViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import io.socket.client.Socket
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class FragmentHomeMain : Fragment(R.layout.fragment_home_main_layout) {
+class FragmentHomeMain : Fragment(R.layout.fragment_home_main_layout),OnLogoutClick {
 
     private var _binding: FragmentHomeMainLayoutBinding? = null
     private val binding get() = _binding!!
@@ -101,7 +98,8 @@ class FragmentHomeMain : Fragment(R.layout.fragment_home_main_layout) {
             containerId = R.id.drawer_container,
             currentItemId = drawerSelectedItemId,
             parentNavController = findNavController(),
-            intent = requireActivity().intent
+            intent = requireActivity().intent,
+            onLogoutClick = this
         )
         controller.observe(viewLifecycleOwner) { navController ->
             NavigationUI.setupWithNavController(
@@ -128,5 +126,10 @@ class FragmentHomeMain : Fragment(R.layout.fragment_home_main_layout) {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    override fun onLogoutClick() {
+        storageManager.clearSharedPref()
+        findNavController().navigate(R.id.action_FragmentHomeMain_to_fragmentAuthMain)
     }
 }

@@ -26,7 +26,8 @@ fun NavigationView.setupWithNavController(
     navGraphIds: List<Int>,
     containerId: Int,
     currentItemId: Int,
-    intent: Intent
+    intent: Intent,
+    onLogoutClick: OnLogoutClick
 ): LiveData<NavController> {
 
     // Map of tags
@@ -70,7 +71,7 @@ fun NavigationView.setupWithNavController(
         } else {
             val newItemId = item.itemId
             if (newItemId == R.id.logout) {
-
+                onLogoutClick.onLogoutClick()
                 return@setNavigationItemSelectedListener true
             }
             if (!graphIdToTagMap.containsKey(newItemId)) {
