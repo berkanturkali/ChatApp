@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorPrimary">
@@ -28,6 +29,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView">
 
         <androidx.core.widget.NestedScrollView
+            android:id="@+id/nested_scroll_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:fillViewport="true"
@@ -152,6 +154,37 @@
                         android:layout_height="match_parent"
                         android:inputType="textPassword"
                         android:maxLines="1"
+                        android:textColor="@color/black" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/about_me_input_layout"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="8dp"
+                    android:hint="@string/about_me"
+                    android:inputType="textMultiLine"
+                    android:scrollbars="vertical"
+                    android:singleLine="false"
+                    android:textAppearance="?attr/textAppearanceSubtitle1"
+                    app:boxStrokeColor="@color/colorPrimary"
+                    app:endIconMode="clear_text"
+                    app:hintTextColor="@color/colorPrimary"
+                    app:layout_constraintTop_toBottomOf="@+id/notify_me_ll"
+                    app:startIconDrawable="@drawable/ic_about"
+                    app:startIconTint="@color/colorPrimary"
+                    tools:layout_editor_absoluteX="8dp">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/about_me_et"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:inputType="text|textImeMultiLine|textCapSentences"
+                        android:scrollbars="vertical"
+                        android:singleLine="false"
                         android:textColor="@color/black" />
                 </com.google.android.material.textfield.TextInputLayout>
 

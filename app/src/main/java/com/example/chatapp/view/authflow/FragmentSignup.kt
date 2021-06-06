@@ -1,7 +1,10 @@
 package com.example.chatapp.view.authflow
 
+import android.annotation.SuppressLint
 import android.os.Bundle
+import android.text.InputType
 import android.view.KeyEvent
+import android.view.MotionEvent
 import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -9,6 +12,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import com.example.chatapp.R
 import com.example.chatapp.databinding.FragmentSignupLayoutBinding
+
 import com.example.chatapp.model.User
 import com.example.chatapp.utils.*
 import com.example.chatapp.viewmodel.MainActivityViewModel
@@ -28,11 +32,13 @@ class FragmentSignup : Fragment(R.layout.fragment_signup_layout) {
     private var password: String = ""
     private var fn: String = ""
     private var ln: String = ""
+    private var aboutMe: String = ""
     private var isDeleted = false
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentSignupLayoutBinding.bind(view)
+
         initButtons()
         initWidgets()
         subscribeObservers()
@@ -52,6 +58,7 @@ class FragmentSignup : Fragment(R.layout.fragment_signup_layout) {
         }
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     private fun initWidgets() {
         binding.apply {
             interestsInputEt.setOnKeyListener { _, keyCode, _ ->
@@ -64,7 +71,19 @@ class FragmentSignup : Fragment(R.layout.fragment_signup_layout) {
                 }
                 return@setOnKeyListener true
             }
-
+            aboutMeEt.inputType =
+                InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_FLAG_MULTI_LINE
+            aboutMeEt.scrollBarStyle = View.SCROLLBARS_INSIDE_OVERLAY
+            aboutMeEt.isScrollbarFadingEnabled = true
+            aboutMeEt.maxLines = 4
+            nestedScrollView.setOnTouchListener { _, _ ->
+                aboutMeEt.parent.requestDisallowInterceptTouchEvent(false)
+                return@setOnTouchListener false
+            }
+            aboutMeEt.setOnTouchListener { _, _ ->
+                aboutMeEt.parent.requestDisallowInterceptTouchEvent(true)
+                return@setOnTouchListener false
+            }
         }
     }
 
@@ -120,13 +139,15 @@ class FragmentSignup : Fragment(R.layout.fragment_signup_layout) {
     }
 
     private fun signup() {
+        aboutMe = binding.aboutMeEt.text.toString().trim()
         val interests = mViewModel.interests.value
         val user = User(
             email = email,
             password = password,
             firstname = fn,
             lastname = ln,
-            interests = interests ?: mutableListOf()
+            interests = interests ?: mutableListOf(),
+            aboutMe = aboutMe
         )
         mViewModel.signup(user)
     }
