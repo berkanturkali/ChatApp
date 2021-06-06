@@ -96,6 +96,10 @@ class FragmentMessages : Fragment(R.layout.fragment_messages_layout) {
 
     private fun initButtons() {
         binding.sendMsgBtn.setOnClickListener {
+            if(binding.messageEt.text.isBlank()){
+                it.showSnack(R.color.colorDanger,"Please type something.")
+                return@setOnClickListener
+            }
             val message =
                 Message.TextMessage(
                     binding.messageEt.text.toString().trim(),
