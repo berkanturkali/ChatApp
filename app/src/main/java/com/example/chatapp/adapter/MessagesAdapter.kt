@@ -4,6 +4,7 @@ import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -52,29 +53,7 @@ class MessagesAdapter(val storageManager: StorageManager) :
                 val calender = Calendar.getInstance()
                 calender.timeInMillis = message.createdAt
                 val mDate = calender.get(Calendar.DAY_OF_MONTH)
-                if (bindingAdapterPosition > 0) {
-                    if (getItem(bindingAdapterPosition - 1) !is Message.TextMessage
-                        && bindingAdapterPosition - 1 == 0
-                    ) {
-                        textGchatDateOther.visibility = View.VISIBLE
-                    } else {
-                        var position = bindingAdapterPosition
-                        do {
-                            position -= 1
-                        } while (getItem(position) !is Message.TextMessage)
-                        val previousMessage =
-                            getItem(position) as Message.TextMessage
-                        calender.timeInMillis = (previousMessage.createdAt)
-                        val prevDate = calender.get(Calendar.DAY_OF_MONTH)
-                        if (mDate > prevDate) {
-                            textGchatDateOther.visibility = View.VISIBLE
-                        } else {
-                            textGchatDateOther.visibility = View.GONE
-                        }
-                    }
-                } else {
-                    textGchatDateOther.visibility = View.VISIBLE
-                }
+                setDateVisibility(bindingAdapterPosition, textGchatDateOther, mDate, calender)
                 textGchatDateOther.text = date
                 textGchatUserOther.text = message.sender
                 textGchatMessageOther.text = message.message
@@ -102,29 +81,12 @@ class MessagesAdapter(val storageManager: StorageManager) :
                     val calender = Calendar.getInstance()
                     calender.timeInMillis = message.createdAt
                     val mDate = calender.get(Calendar.DAY_OF_MONTH)
-                    if (bindingAdapterPosition > 0) {
-                        if (getItem(bindingAdapterPosition - 1) !is Message.TextMessage
-                            && bindingAdapterPosition - 1 == 0
-                        ) {
-                            textGchatDateMe.visibility = View.VISIBLE
-                        } else {
-                            var position = bindingAdapterPosition
-                            do {
-                                position -= 1
-                            } while (getItem(position) !is Message.TextMessage)
-                            val previousMessage =
-                                getItem(position) as Message.TextMessage
-                            calender.timeInMillis = (previousMessage.createdAt)
-                            val prevDate = calender.get(Calendar.DAY_OF_MONTH)
-                            if (mDate > prevDate) {
-                                textGchatDateMe.visibility = View.VISIBLE
-                            } else {
-                                textGchatDateMe.visibility = View.GONE
-                            }
-                        }
-                    } else {
-                        textGchatDateMe.visibility = View.VISIBLE
-                    }
+                    setDateVisibility(
+                        bindingAdapterPosition,
+                        textGchatDateMe,
+                        mDate,
+                        calender
+                    )
                     textGchatMessageMe.setLinkTextColor(Color.WHITE)
                     textGchatDateMe.text = date
                     textGchatMessageMe.text = message.message
@@ -204,6 +166,37 @@ class MessagesAdapter(val storageManager: StorageManager) :
             else -> {
                 LOG_TYPE
             }
+        }
+    }
+
+    private fun setDateVisibility(
+        bindingAdapterPosition: Int,
+        dateTv: TextView,
+        mDate: Int,
+        calender: Calendar
+    ) {
+        if (bindingAdapterPosition > 0) {
+            if (getItem(bindingAdapterPosition - 1) !is Message.TextMessage
+                && bindingAdapterPosition - 1 == 0
+            ) {
+                dateTv.visibility = View.VISIBLE
+            } else {
+                var position = bindingAdapterPosition
+                do {
+                    position -= 1
+                } while (getItem(position) !is Message.TextMessage)
+                val previousMessage =
+                    getItem(position) as Message.TextMessage
+                calender.timeInMillis = (previousMessage.createdAt)
+                val prevDate = calender.get(Calendar.DAY_OF_MONTH)
+                if (mDate > prevDate) {
+                    dateTv.visibility = View.VISIBLE
+                } else {
+                    dateTv.visibility = View.GONE
+                }
+            }
+        } else {
+            dateTv.visibility = View.VISIBLE
         }
     }
 }
