@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import android.text.InputType
 import android.view.KeyEvent
-import android.view.MotionEvent
 import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -12,7 +11,6 @@ import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import com.example.chatapp.R
 import com.example.chatapp.databinding.FragmentSignupLayoutBinding
-
 import com.example.chatapp.model.User
 import com.example.chatapp.utils.*
 import com.example.chatapp.viewmodel.MainActivityViewModel
@@ -38,7 +36,7 @@ class FragmentSignup : Fragment(R.layout.fragment_signup_layout) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentSignupLayoutBinding.bind(view)
-
+        binding.cardView.setBackgroundResource(R.drawable.card_view_bg)
         initButtons()
         initWidgets()
         subscribeObservers()
