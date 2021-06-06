@@ -1,7 +1,6 @@
 package com.example.chatapp.adapter
 
 import android.graphics.Color
-import android.text.method.LinkMovementMethod
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -54,18 +53,24 @@ class MessagesAdapter(val storageManager: StorageManager) :
                 calender.timeInMillis = message.createdAt
                 val mDate = calender.get(Calendar.DAY_OF_MONTH)
                 if (bindingAdapterPosition > 0) {
-                    var position = bindingAdapterPosition
-                    do {
-                        position -= 1
-                    } while (getItem(position) !is Message.TextMessage)
-                    val previousMessage =
-                        getItem(position) as Message.TextMessage
-                    calender.timeInMillis = (previousMessage.createdAt)
-                    val prevDate = calender.get(Calendar.DAY_OF_MONTH)
-                    if (mDate > prevDate) {
+                    if (getItem(bindingAdapterPosition - 1) !is Message.TextMessage
+                        && bindingAdapterPosition - 1 == 0
+                    ) {
                         textGchatDateOther.visibility = View.VISIBLE
                     } else {
-                        textGchatDateOther.visibility = View.GONE
+                        var position = bindingAdapterPosition
+                        do {
+                            position -= 1
+                        } while (getItem(position) !is Message.TextMessage)
+                        val previousMessage =
+                            getItem(position) as Message.TextMessage
+                        calender.timeInMillis = (previousMessage.createdAt)
+                        val prevDate = calender.get(Calendar.DAY_OF_MONTH)
+                        if (mDate > prevDate) {
+                            textGchatDateOther.visibility = View.VISIBLE
+                        } else {
+                            textGchatDateOther.visibility = View.GONE
+                        }
                     }
                 } else {
                     textGchatDateOther.visibility = View.VISIBLE
@@ -98,18 +103,24 @@ class MessagesAdapter(val storageManager: StorageManager) :
                     calender.timeInMillis = message.createdAt
                     val mDate = calender.get(Calendar.DAY_OF_MONTH)
                     if (bindingAdapterPosition > 0) {
-                        var position = bindingAdapterPosition
-                        do {
-                            position -= 1
-                        } while (getItem(position) !is Message.TextMessage)
-                        val previousMessage =
-                            getItem(position) as Message.TextMessage
-                        calender.timeInMillis = (previousMessage.createdAt)
-                        val prevDate = calender.get(Calendar.DAY_OF_MONTH)
-                        if (mDate > prevDate) {
+                        if (getItem(bindingAdapterPosition - 1) !is Message.TextMessage
+                            && bindingAdapterPosition - 1 == 0
+                        ) {
                             textGchatDateMe.visibility = View.VISIBLE
                         } else {
-                            textGchatDateMe.visibility = View.GONE
+                            var position = bindingAdapterPosition
+                            do {
+                                position -= 1
+                            } while (getItem(position) !is Message.TextMessage)
+                            val previousMessage =
+                                getItem(position) as Message.TextMessage
+                            calender.timeInMillis = (previousMessage.createdAt)
+                            val prevDate = calender.get(Calendar.DAY_OF_MONTH)
+                            if (mDate > prevDate) {
+                                textGchatDateMe.visibility = View.VISIBLE
+                            } else {
+                                textGchatDateMe.visibility = View.GONE
+                            }
                         }
                     } else {
                         textGchatDateMe.visibility = View.VISIBLE
