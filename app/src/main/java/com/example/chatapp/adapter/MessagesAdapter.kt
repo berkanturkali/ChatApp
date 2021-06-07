@@ -182,12 +182,12 @@ class MessagesAdapter(val storageManager: StorageManager) :
                 dateTv.visibility = View.VISIBLE
             } else {
                 var position = bindingAdapterPosition
-                while (getItem(position) !is Message.TextMessage) {
+                do {
                     position -= 1
-                }
+                } while (getItem(position) !is Message.TextMessage)
                 val previousMessage =
                     getItem(position) as Message.TextMessage
-                calender.timeInMillis = (previousMessage.createdAt)
+                calender.timeInMillis = previousMessage.createdAt
                 val prevDate = calender.get(Calendar.DAY_OF_MONTH)
                 if (mDate > prevDate) {
                     dateTv.visibility = View.VISIBLE
