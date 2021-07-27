@@ -32,7 +32,14 @@ interface ChatApi {
 
     @GET("chat/room/{room}")
     suspend fun getHistory(
-        @Path("room") room: String
+        @Path("room") room: String,
+        @Query("isPrivate") isPrivate:Boolean
     ): Response<List<Message.TextMessage>>
+
+    @GET("user/all")
+    suspend fun users(
+        @Query("page") page: Int,
+        @Query("limit") limit: Int
+    ): List<User>
 
 }

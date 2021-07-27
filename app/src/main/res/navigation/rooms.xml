@@ -20,10 +20,9 @@
     </fragment>
     <fragment
         android:id="@+id/fragmentMessages"
-        android:label=""
         android:name="com.example.chatapp.view.homeflow.FragmentMessages"
+        android:label=""
         tools:layout="@layout/fragment_messages_layout">
-
         <argument
             android:name="room"
             app:argType="string" />

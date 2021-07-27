@@ -1,6 +1,7 @@
 package com.example.chatapp.adapter
 
 import android.graphics.Color
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,6 +16,7 @@ import com.example.chatapp.model.Message
 import com.example.chatapp.utils.*
 import java.util.*
 
+private const val TAG = "MessagesAdapter"
 class MessagesAdapter(val storageManager: StorageManager) :
     ListAdapter<Message, RecyclerView.ViewHolder>(MESSAGE_COMPARATOR) {
 
@@ -162,41 +164,41 @@ class MessagesAdapter(val storageManager: StorageManager) :
                 } else {
                     RECEIVER_TYPE
                 }
-            }
-            else -> {
-                LOG_TYPE
-            }
+        }
+        else -> {
+            LOG_TYPE
         }
     }
+}
 
-    private fun setDateVisibility(
-        bindingAdapterPosition: Int,
-        dateTv: TextView,
-        mDate: Int,
-        calender: Calendar
-    ) {
-        if (bindingAdapterPosition > 0) {
-            if (getItem(bindingAdapterPosition - 1) !is Message.TextMessage
-                && bindingAdapterPosition - 1 == 0
-            ) {
+private fun setDateVisibility(
+    bindingAdapterPosition: Int,
+    dateTv: TextView,
+    mDate: Int,
+    calender: Calendar
+) {
+    if (bindingAdapterPosition > 0) {
+        if (getItem(bindingAdapterPosition - 1) !is Message.TextMessage
+            && bindingAdapterPosition - 1 == 0
+        ) {
+            dateTv.visibility = View.VISIBLE
+        } else {
+            var position = bindingAdapterPosition
+            do {
+                position -= 1
+            } while (getItem(position) !is Message.TextMessage)
+            val previousMessage =
+                getItem(position) as Message.TextMessage
+            calender.timeInMillis = previousMessage.createdAt
+            val prevDate = calender.get(Calendar.DAY_OF_MONTH)
+            if (mDate > prevDate) {
                 dateTv.visibility = View.VISIBLE
             } else {
-                var position = bindingAdapterPosition
-                do {
-                    position -= 1
-                } while (getItem(position) !is Message.TextMessage)
-                val previousMessage =
-                    getItem(position) as Message.TextMessage
-                calender.timeInMillis = previousMessage.createdAt
-                val prevDate = calender.get(Calendar.DAY_OF_MONTH)
-                if (mDate > prevDate) {
-                    dateTv.visibility = View.VISIBLE
-                } else {
-                    dateTv.visibility = View.GONE
-                }
+                dateTv.visibility = View.GONE
             }
-        } else {
-            dateTv.visibility = View.VISIBLE
         }
+    } else {
+        dateTv.visibility = View.VISIBLE
     }
+}
 }

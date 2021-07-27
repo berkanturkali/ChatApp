@@ -17,4 +17,18 @@ object Constants {
     const val FULL_NAME = "fullname"
     const val TIME_PATTERN = "HH:mm"
     const val DATE_PATTERN = "dd/MM/yyyy"
+
+    const val NOTIFICATION_CHANNEL_ID = "chat_notification_id"
+
+    const val NOTIFICATION_CHANNEL_NAME = "chat_notification"
+
+    const val NOTIFICATION_ID = 3
+    const val SUMMARY_ID = 0
+    const val GROUP_KEY_MESSAGE = "com.android.example.MESSAGE"
+
+    const val PENDING_INTENT_REQUEST_CODE = 99
+
+    const val ACTION_SERVICE_START = "ACTION_SERVICE_START"
+
+    const val ACTION_SERVICE_STOP = "ACTION_SERVICE_STOP"
 }

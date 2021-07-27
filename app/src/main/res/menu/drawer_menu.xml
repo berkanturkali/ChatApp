@@ -22,6 +22,13 @@
             android:title="Add Room"
             app:showAsAction="ifRoom|withText" />
         <item
+            android:id="@+id/users"
+            android:checkable="true"
+            android:icon="@drawable/ic_users"
+            android:menuCategory="secondary"
+            android:title="@string/users"
+            app:showAsAction="ifRoom|withText" />
+        <item
             android:id="@+id/profile"
             android:checkable="true"
             android:icon="@drawable/ic_person"

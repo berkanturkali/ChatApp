@@ -15,4 +15,8 @@
     <string name="full_name">%1$s  %2$s</string>
     <string name="this_is_a_message">This is a Message</string>
     <string name="about_me">About Me</string>
+    <string name="no_results">No Results</string>
+    <string name="retry">Retry</string>
+    <string name="users">Users</string>
+    <string name="typingInfo">%1$s is typing...</string>
 </resources>

@@ -5,13 +5,15 @@ sealed class Message {
         val message: String,
         val sender: String,
         val room: String,
-        var createdAt: Long = 0
+        var createdAt: Long = 0,
+        val receiver: String? = null,
+        val isPrivate: Boolean = false
     ) : Message()
 
     data class LogMessage(
         val type: String,
         val content: String
-    ):Message()
+    ) : Message()
 }
 
 

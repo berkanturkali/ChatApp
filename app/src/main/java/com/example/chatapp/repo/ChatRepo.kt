@@ -18,5 +18,5 @@ class ChatRepo @Inject constructor(
 
     suspend fun getRooms() = apiCall { api.rooms() }
 
-    suspend fun getHistory(room:String):Resource<List<Message.TextMessage>> = apiCall { api.getHistory(room) }
+    suspend fun getHistory(room:String,isPrivate:Boolean):Resource<List<Message.TextMessage>> = apiCall { api.getHistory(room,isPrivate) }
 }

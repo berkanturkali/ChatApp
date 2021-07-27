@@ -64,7 +64,7 @@ class FragmentRooms : Fragment(R.layout.fragment_rooms_layout), RoomAdapter.OnRo
     }
 
     override fun onRoomItemClick(room: Room) {
-        val action = FragmentRoomsDirections.actionFragmentRoomsToFragmentMessages(room.name)
+        val action = FragmentRoomsDirections.actionFragmentRoomsToFragmentMessages(room = room.name)
         findNavController().navigate(action)
     }
 }

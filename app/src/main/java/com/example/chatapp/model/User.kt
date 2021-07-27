@@ -12,6 +12,7 @@ data class User(
     val password: String,
     val interests: MutableList<String> = mutableListOf(),
     val photo: String = "",
-    var aboutMe:String = "",
-    var _id:String = ""
-):Parcelable
+    var aboutMe: String = "",
+    var _id: String = "",
+    val online: Boolean = false
+) : Parcelable
