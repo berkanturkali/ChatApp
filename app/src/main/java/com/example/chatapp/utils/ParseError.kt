@@ -6,7 +6,7 @@ import retrofit2.Converter
 import retrofit2.Response
 import retrofit2.Retrofit
 
-internal fun <T> parseError(retrofit: Retrofit, response: Response<T>): String {
+fun <T> parseError(retrofit: Retrofit, response: Response<T>): String {
     val converter: Converter<ResponseBody, ErrorResponse> =
         retrofit.responseBodyConverter(ErrorResponse::class.java, arrayOfNulls<Annotation>(0))
     response.errorBody()?.let {
