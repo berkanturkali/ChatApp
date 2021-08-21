@@ -10,22 +10,21 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.NavigationUI
 import com.example.chatapp.R
-import com.example.chatapp.databinding.FragmentHomeMainLayoutBinding
+import com.example.chatapp.databinding.FragmentHomeFlowContainerLayoutBinding
 import com.example.chatapp.model.User
 import com.example.chatapp.utils.*
 import com.example.chatapp.viewmodel.homeflow.FragmentHomeMainViewModel
 import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
 import io.socket.client.Socket
-
 import javax.inject.Inject
 
 private const val TAG = "FragmentHomeMain"
 
 @AndroidEntryPoint
-class FragmentHomeMain : Fragment(R.layout.fragment_home_main_layout), OnLogoutClick {
+class HomeFlowContainerFragment : Fragment(R.layout.fragment_home_flow_container_layout), OnLogoutClick {
 
-    private var _binding: FragmentHomeMainLayoutBinding? = null
+    private var _binding: FragmentHomeFlowContainerLayoutBinding? = null
     private val binding get() = _binding!!
     private val mViewModel: FragmentHomeMainViewModel by viewModels()
 
@@ -47,7 +46,7 @@ class FragmentHomeMain : Fragment(R.layout.fragment_home_main_layout), OnLogoutC
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        _binding = FragmentHomeMainLayoutBinding.bind(view)
+        _binding = FragmentHomeFlowContainerLayoutBinding.bind(view)
         savedInstanceState?.let {
             drawerSelectedItemId = it.getInt(drawerSelectedItemIdKey, drawerSelectedItemId)
         }

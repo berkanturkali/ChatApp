@@ -49,9 +49,9 @@
     </fragment>
     <fragment
         android:id="@+id/fragmentHomeMain"
-        android:name="com.example.chatapp.view.homeflow.FragmentHomeMain"
+        android:name="com.example.chatapp.view.homeflow.HomeFlowContainerFragment"
         android:label="FragmentHomeMain"
-        tools:layout="@layout/fragment_home_main_layout" >
+        tools:layout="@layout/fragment_home_flow_container_layout" >
     <action
         android:id="@+id/action_FragmentHomeMain_to_fragmentAuthMain"
         app:destination="@id/fragmentAuthMain"

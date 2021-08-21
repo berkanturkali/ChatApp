@@ -6,6 +6,7 @@ import com.example.chatapp.network.ChatApi
 import com.example.chatapp.utils.Constants
 import com.example.chatapp.utils.StorageManager
 import com.example.chatapp.view.MainActivity
+import com.google.gson.Gson
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -85,6 +86,9 @@ object NetworkModule {
     fun provideRetroApi(retrofit: Retrofit): ChatApi {
         return retrofit.create(ChatApi::class.java)
     }
+
+    @Provides
+    fun provideGson() = Gson()
 
 
 }

@@ -13,8 +13,7 @@ class MainActivityViewModel @Inject constructor() : ViewModel() {
     private val _showProgress = MutableLiveData<Event<Boolean>>()
     val showProgress: LiveData<Event<Boolean>> get() = _showProgress
 
-
-    fun showProgress(show:Boolean) {
+    fun showProgress(show: Boolean) {
         _showProgress.value = Event(show)
     }
 }

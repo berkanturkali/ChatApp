@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.chatapp.model.Message
 import com.example.chatapp.model.User
+import com.example.chatapp.repo.UserRepo
 import com.example.chatapp.repo.UserRepoImpl
 import com.example.chatapp.utils.Event
 import com.example.chatapp.utils.Resource
@@ -16,7 +17,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class FragmentHomeMainViewModel @Inject constructor(
-    private val repo: UserRepoImpl
+    private val repo: UserRepo
 ) : ViewModel() {
 
     private val _me = MutableLiveData<Resource<User>>()

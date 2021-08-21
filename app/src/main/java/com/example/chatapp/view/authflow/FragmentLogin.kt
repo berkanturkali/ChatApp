@@ -26,7 +26,6 @@ class FragmentLogin : Fragment(R.layout.fragment_login_layout) {
     @Inject
     lateinit var storageManager: StorageManager
 
-
     private var email = ""
     private var password = ""
 

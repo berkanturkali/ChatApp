@@ -46,7 +46,8 @@ class FragmentMessages : Fragment(R.layout.fragment_messages_layout) {
     @Inject
     lateinit var storageManager: StorageManager
 
-    private val gson = Gson()
+    @Inject
+    lateinit var gson: Gson
 
     private lateinit var messagesAdapter: MessagesAdapter
 
