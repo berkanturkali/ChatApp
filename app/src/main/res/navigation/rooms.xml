@@ -26,5 +26,5 @@
         <argument
             android:name="room"
             app:argType="string" />
-    </fragment>
+    </fragment><action android:id="@+id/action_global_fragmentMessages" app:destination="@id/fragmentMessages"/>
 </navigation>

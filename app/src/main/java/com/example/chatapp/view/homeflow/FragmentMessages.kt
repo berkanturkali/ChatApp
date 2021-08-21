@@ -2,6 +2,7 @@ package com.example.chatapp.view.homeflow
 
 import android.os.Bundle
 import android.text.Editable
+import android.text.TextUtils
 import android.text.TextWatcher
 import android.view.View
 import android.widget.TextView
@@ -27,6 +28,7 @@ import kotlinx.coroutines.launch
 import org.json.JSONObject
 import java.util.*
 import javax.inject.Inject
+
 
 private const val TAG = "FragmentMessages"
 
@@ -60,7 +62,7 @@ class FragmentMessages : Fragment(R.layout.fragment_messages_layout) {
         typingObject = JSONObject()
         initMessageRv()
         joinRoom(args.room)
-        mViewModel.getHistory(args.room, false)
+        mViewModel.getHistory(args.room)
         updateMembers()
         listenMessages()
         typingObject.put("room", args.room)
@@ -74,11 +76,11 @@ class FragmentMessages : Fragment(R.layout.fragment_messages_layout) {
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 if (s.toString().isNotEmpty() || s.toString().isNotBlank()) {
                     typingObject.put("isTyping", true)
-                    typingObject.put("user", storageManager.getFullname())
+                    typingObject.put("user", storageManager.getFullname().toString())
                     socket.emit("typing", typingObject)
                 } else {
                     typingObject.put("isTyping", false)
-                    typingObject.put("user", "")
+                    typingObject.put("user", storageManager.getFullname().toString())
                     socket.emit("typing", typingObject)
                 }
             }
@@ -107,8 +109,18 @@ class FragmentMessages : Fragment(R.layout.fragment_messages_layout) {
     private fun listenTypingEvent() {
         socket.on("displayTyping") {
             if (it[0].toString().toBoolean()) {
+                var typingUsersList =
+                    gson.fromJson<List<String>>(it[1].toString(), List::class.java)
+                typingUsersList =
+                    mViewModel.extractOwnName(typingUsersList, storageManager.getFullname()!!)
+                val typingInfoStringResource = mViewModel.getTypingInfoString(typingUsersList)
+                val typingUsers: String = if (typingUsersList.size >= 4) {
+                    mViewModel.extractFirstThreeAndReturn(typingUsersList)
+                } else {
+                    TextUtils.join(", ", typingUsersList)
+                }
                 binding.headerLayout.typingInfoTv.text =
-                    String.format(resources.getString(R.string.typingInfo), it[1].toString())
+                    String.format(getString(typingInfoStringResource), typingUsers)
             } else {
                 binding.headerLayout.typingInfoTv.text = ""
             }
