@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.chatapp.di.qualifiers.ChatRepoQ
 import com.example.chatapp.model.Room
 import com.example.chatapp.repo.ChatRepo
 import com.example.chatapp.utils.Resource
@@ -14,7 +15,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class FragmentRoomsViewModel @Inject constructor(
-    private val repo: ChatRepo
+    @ChatRepoQ private val repo: ChatRepo
 ) : ViewModel() {
 
     private val _rooms = MutableLiveData<Resource<List<Room>>>()

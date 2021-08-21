@@ -1,5 +1,6 @@
 package com.example.chatapp.di.modules
 
+import com.example.chatapp.di.qualifiers.ChatRepoQ
 import com.example.chatapp.repo.ChatRepo
 import com.example.chatapp.repo.ChatRepoImpl
 import com.example.chatapp.repo.UserRepo
@@ -14,7 +15,8 @@ import dagger.hilt.components.SingletonComponent
 abstract class RepoModule {
 
     @Binds
-    abstract fun bindChatRepo(chatRepoImpl: ChatRepoImpl): ChatRepo
+    @ChatRepoQ
+    abstract fun bindChatRepo( chatRepoImpl: ChatRepoImpl): ChatRepo
 
     @Binds
     abstract fun bindUserRepo(userRepoImpl: UserRepoImpl): UserRepo

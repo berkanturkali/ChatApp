@@ -42,7 +42,8 @@ class HomeFlowContainerFragment : Fragment(R.layout.fragment_home_flow_container
     @Inject
     lateinit var socket: Socket
 
-    private val gson = Gson()
+    @Inject
+    lateinit var gson : Gson
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
