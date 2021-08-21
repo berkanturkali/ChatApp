@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.chatapp.model.User
-import com.example.chatapp.repo.UserRepo
+import com.example.chatapp.repo.UserRepoImpl
 import com.example.chatapp.utils.*
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -14,7 +14,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class FragmentSignupViewModel @Inject constructor(
-    private val repo: UserRepo
+    private val repo: UserRepoImpl
 ) : ViewModel() {
     private val _isValid = MutableLiveData<Event<Boolean>>()
     val isValid: LiveData<Event<Boolean>>

@@ -1,13 +1,9 @@
-package com.example.chatapp.di
+package com.example.chatapp.di.modules
 
 import android.content.Context
 import android.content.Intent
 import com.example.chatapp.network.ChatApi
 import com.example.chatapp.utils.Constants
-import com.example.chatapp.utils.Constants.BASE_URL
-import com.example.chatapp.utils.Constants.CONNECTION_TIMEOUT
-import com.example.chatapp.utils.Constants.READ_TIMEOUT
-import com.example.chatapp.utils.Constants.WRITE_TIMEOUT
 import com.example.chatapp.utils.StorageManager
 import com.example.chatapp.view.MainActivity
 import dagger.Module
@@ -15,8 +11,6 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import io.socket.client.IO
-import io.socket.client.Socket
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.Request
@@ -29,7 +23,8 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-object AppModule {
+object NetworkModule {
+
     @Singleton
     @Provides
     fun provideHttpInterceptor(): HttpLoggingInterceptor {
@@ -65,9 +60,9 @@ object AppModule {
         interceptor: Interceptor,
     ): OkHttpClient {
         return OkHttpClient.Builder()
-            .connectTimeout(CONNECTION_TIMEOUT, TimeUnit.SECONDS)
-            .writeTimeout(WRITE_TIMEOUT, TimeUnit.SECONDS)
-            .readTimeout(READ_TIMEOUT, TimeUnit.SECONDS)
+            .connectTimeout(Constants.CONNECTION_TIMEOUT, TimeUnit.SECONDS)
+            .writeTimeout(Constants.WRITE_TIMEOUT, TimeUnit.SECONDS)
+            .readTimeout(Constants.READ_TIMEOUT, TimeUnit.SECONDS)
             .addInterceptor(interceptor)
             .addInterceptor(loggingInterceptor)
             .retryOnConnectionFailure(true)
@@ -78,7 +73,7 @@ object AppModule {
     @Provides
     fun provideRetroInstance(client: OkHttpClient): Retrofit {
         return Retrofit.Builder()
-            .baseUrl(BASE_URL)
+            .baseUrl(Constants.BASE_URL)
             .client(client)
             .addConverterFactory(ScalarsConverterFactory.create())
             .addConverterFactory(GsonConverterFactory.create())
@@ -91,9 +86,5 @@ object AppModule {
         return retrofit.create(ChatApi::class.java)
     }
 
-    @Singleton
-    @Provides
-    fun provideSocket(): Socket {
-        return IO.socket(Constants.SOCKET_URL)
-    }
+
 }

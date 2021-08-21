@@ -7,7 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.chatapp.R
 import com.example.chatapp.model.Message
-import com.example.chatapp.repo.ChatRepo
+import com.example.chatapp.repo.ChatRepoImpl
 import com.example.chatapp.utils.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -16,7 +16,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class FragmentMessagesViewModel @Inject constructor(
-    private val repo: ChatRepo
+    private val repo: ChatRepoImpl
 ) : ViewModel() {
 
     private val _history = MutableLiveData<Resource<List<Message.TextMessage>>>()
