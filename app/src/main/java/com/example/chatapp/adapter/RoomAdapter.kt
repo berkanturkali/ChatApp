@@ -5,12 +5,16 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.example.chatapp.databinding.RoomItemLayoutBinding
+import com.example.chatapp.databinding.RoomItemBinding
 import com.example.chatapp.model.Room
+import com.example.chatapp.utils.ItemClickListener
 import com.example.chatapp.utils.load
+import javax.inject.Inject
 
-class RoomAdapter(private val onClickListener: OnRoomClick) :
+class RoomAdapter @Inject constructor() :
     ListAdapter<Room, RoomAdapter.RoomViewHolder>(ROOM_COMPARATOR) {
+
+    private lateinit var listener: ItemClickListener<Room>
 
     companion object {
         val ROOM_COMPARATOR = object : DiffUtil.ItemCallback<Room>() {
@@ -24,7 +28,7 @@ class RoomAdapter(private val onClickListener: OnRoomClick) :
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RoomViewHolder =
         RoomViewHolder(
-            RoomItemLayoutBinding.inflate(
+            RoomItemBinding.inflate(
                 LayoutInflater.from(parent.context),
                 parent,
                 false
@@ -36,7 +40,7 @@ class RoomAdapter(private val onClickListener: OnRoomClick) :
         item?.let { holder.bind(item) }
     }
 
-    inner class RoomViewHolder(private val binding: RoomItemLayoutBinding) :
+    inner class RoomViewHolder(private val binding: RoomItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
         init {
             binding.root.setOnClickListener {
@@ -44,7 +48,7 @@ class RoomAdapter(private val onClickListener: OnRoomClick) :
                 if (position != RecyclerView.NO_POSITION) {
                     val item = getItem(position)
                     item?.let {
-                        onClickListener.onRoomItemClick(it)
+                        listener.onItemClick(it)
                     }
                 }
             }
@@ -58,8 +62,8 @@ class RoomAdapter(private val onClickListener: OnRoomClick) :
         }
     }
 
-    interface OnRoomClick {
-        fun onRoomItemClick(room: Room)
+    fun setListener(listener: ItemClickListener<Room>) {
+        this.listener = listener
     }
 }
 

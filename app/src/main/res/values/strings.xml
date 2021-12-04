@@ -5,7 +5,7 @@
     <string name="password">Password</string>
     <string name="signup">Signup</string>
     <string name="firstname">Firstname</string>
-    <string name="lastName">Lastname</string>
+    <string name="lastname">Lastname</string>
     <string name="Interests">Interests</string>
     <string name="chats">Chats</string>
     <string name="logout">Logout</string>
@@ -20,4 +20,10 @@
     <string name="users">Users</string>
     <string name="typingInfo">%1$s is typing...</string>
     <string name="typingInfoPlural">%1$s are typing...</string>
+    <string name="success">Success</string>
+    <string name="nothing_here">Nothing here</string>
+    <string name="create_new_room">Create New Room</string>
+    <string name="login_success_message">Logged in successfully.</string>
+    <string name="room_name">Room Name</string>
+    <string name="add_room">Add Room</string>
 </resources>

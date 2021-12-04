@@ -9,18 +9,29 @@ plugins {
 }
 
 android {
-    compileSdkVersion 30
+    compileSdkVersion 31
     buildToolsVersion "30.0.3"
 
     defaultConfig {
         applicationId "com.example.chatapp"
         minSdkVersion 21
-        targetSdkVersion 30
+        targetSdkVersion 31
         versionCode 1
         versionName "1.0"
 
-//        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        testInstrumentationRunner  "com.example.chatapp.HiltTestRunner"
+
+        testInstrumentationRunner "com.example.chatapp.HiltTestRunner"
+    }
+    android {
+        sourceSets {
+            String sharedTestDir = 'src/sharedTest/java'
+            test {
+                java.srcDirs += sharedTestDir
+            }
+            androidTest {
+                java.srcDirs += sharedTestDir
+            }
+        }
     }
 
     buildTypes {
@@ -45,94 +56,98 @@ android {
     packagingOptions {
         exclude 'META-INF/AL2.0'
         exclude 'META-INF/LGPL2.1'
+        exclude '/win32-x86-64/attach_hotspot_windows.dll'
+        exclude 'win32-x86/attach_hotspot_windows.dll'
+        exclude 'META-INF/licenses/ASM'
+    }
+    testOptions {
+        unitTests.includeAndroidResources = true
     }
 }
 
 dependencies {
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-    implementation 'androidx.core:core-ktx:1.5.0'
-    implementation 'androidx.appcompat:appcompat:1.3.0'
-    implementation 'com.google.android.material:material:1.3.0'
-    implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
+    implementation 'androidx.core:core-ktx:1.7.0'
+    implementation 'androidx.appcompat:appcompat:1.4.0'
+    implementation 'com.google.android.material:material:1.4.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.2'
     testImplementation 'junit:junit:4.+'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.2'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.3'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
+    androidTestImplementation "androidx.test.espresso:espresso-contrib:3.3.0"
+    implementation "androidx.recyclerview:recyclerview:1.2.0"
 
     //glide
-    implementation 'com.github.bumptech.glide:glide:4.11.0'
-    annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
+    implementation "com.github.bumptech.glide:glide:$glide_version"
+    annotationProcessor "com.github.bumptech.glide:compiler:$glide_version"
 
     //retrofit
-    implementation "com.squareup.retrofit2:retrofit:2.9.0"
-    implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
-    implementation 'com.squareup.retrofit2:converter-scalars:2.1.0'
+    implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
+    implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
+    implementation "com.squareup.retrofit2:converter-scalars:$converter_scalars_version"
 
-
-    implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
-    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.1"
-    implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.3.1"
-    implementation 'androidx.core:core-ktx:1.3.2'
-    implementation "androidx.lifecycle:lifecycle-viewmodel-savedstate:2.4.0-alpha03"
-
-
-    implementation "androidx.navigation:navigation-fragment-ktx:2.3.5"
-    implementation "androidx.navigation:navigation-ui-ktx:2.3.5"
+    //nav-component
+    implementation "androidx.navigation:navigation-fragment-ktx:$nav_component_version"
+    implementation "androidx.navigation:navigation-ui-ktx:$nav_component_version"
 
     //Dagger - Hilt
-    implementation "com.google.dagger:hilt-android:2.38.1"
-    kapt "com.google.dagger:hilt-compiler:2.38.1"
-
-    implementation "androidx.hilt:hilt-lifecycle-viewmodel:1.0.0-alpha03"
+    implementation "com.google.dagger:hilt-android:$hilt_version"
+    kapt "com.google.dagger:hilt-compiler:$hilt_version"
+    implementation "androidx.hilt:hilt-lifecycle-viewmodel:$hilt_vm_version"
+    implementation "androidx.hilt:hilt-navigation-fragment:1.0.0"
 
     // Coroutines
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.0'
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.0'
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutine_version"
 
     //KTX
-    implementation "androidx.activity:activity-ktx:1.2.3"
-    implementation "androidx.fragment:fragment-ktx:1.3.6"
+    implementation "androidx.fragment:fragment-ktx:$fragment_version"
 
-    def paging_version = "3.0.0-alpha05"
-    implementation "androidx.paging:paging-runtime-ktx:$paging_version"
-    implementation 'com.squareup.okhttp3:logging-interceptor:4.9.0'
+    //interceptor
+    implementation "com.squareup.okhttp3:logging-interceptor:$okhttp3_interceptor_version"
 
     //swiperefresh
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
 
-    def room_version = "2.3.0-beta03"
     implementation "androidx.room:room-runtime:$room_version"
     implementation "androidx.room:room-ktx:$room_version"
     kapt "androidx.room:room-compiler:$room_version"
 
-    implementation 'com.google.code.gson:gson:2.8.7'
-    implementation('io.socket:socket.io-client:2.0.0') {
+    implementation "com.google.code.gson:gson:$gson_version"
+    implementation("io.socket:socket.io-client:$socket_io_version") {
         exclude group: 'org.json', module: 'json'
     }
-    implementation 'com.google.android.flexbox:flexbox:3.0.0'
 
     /* testing */
-    testImplementation "org.powermock:powermock-module-junit4:1.6.2"
-    testImplementation "org.powermock:powermock-module-junit4-rule:1.6.2"
-    testImplementation "org.powermock:powermock-api-mockito:1.6.2"
-    testImplementation "org.powermock:powermock-classloading-xstream:1.6.2"
-
     //truth
-    testImplementation "com.google.truth:truth:1.1"
+    testImplementation "com.google.truth:truth:1.1.3"
+    androidTestImplementation "com.google.truth:truth:1.1.3"
 
     //hilt testing
-    androidTestImplementation 'com.google.dagger:hilt-android-testing:2.38.1'
-    kaptAndroidTest 'com.google.dagger:hilt-android-compiler:2.38.1'
+    androidTestImplementation "com.google.dagger:hilt-android-testing:$hilt_version"
+    kaptAndroidTest "com.google.dagger:hilt-android-compiler:$hilt_version"
+
+    //roboelectric
+    testImplementation "org.robolectric:robolectric:$robolectric_version"
 
     //androidx testing
     androidTestImplementation "androidx.arch.core:core-testing:2.1.0"
+    testImplementation "androidx.arch.core:core-testing:2.1.0"
 
-    //coroutines test library
-    androidTestImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.5.0"
+    //coroutines
+    androidTestImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutine_version"
+    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutine_version"
 
-    androidTestImplementation 'androidx.test.ext:junit:1.1.3'
-    androidTestImplementation "com.google.truth:truth:1.1"
+    //nav-component
+    androidTestImplementation "androidx.navigation:navigation-testing:$nav_component_version"
+    debugImplementation "androidx.fragment:fragment-testing:$fragment_version"
 
+    //mockk
+    testImplementation 'io.mockk:mockk:1.12.0'
+    androidTestImplementation 'io.mockk:mockk-android:1.12.0'
+
+    //lottie
+    implementation "com.airbnb.android:lottie:$lottie_version"
 
 
 }

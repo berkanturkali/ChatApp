@@ -8,33 +8,16 @@
         android:id="@+id/drawerGroup"
         android:checkableBehavior="single">
         <item
-            android:id="@+id/rooms"
+            android:id="@+id/roomsFragment"
             android:checked="true"
             android:icon="@drawable/ic_chats"
-            android:menuCategory="secondary"
             android:title="@string/rooms"
-            app:showAsAction="ifRoom|withText" />
-        <item
-            android:id="@+id/add_room"
-            android:checked="true"
-            android:icon="@drawable/ic_room"
-            android:menuCategory="secondary"
-            android:title="Add Room"
-            app:showAsAction="ifRoom|withText" />
-        <item
-            android:id="@+id/profile"
-            android:checkable="true"
-            android:icon="@drawable/ic_person"
-            android:menuCategory="secondary"
-            android:title="@string/profile"
             app:showAsAction="ifRoom|withText" />
     </group>
     <item
         android:id="@+id/logout"
         android:icon="@drawable/ic_logout"
-        android:menuCategory="secondary"
         android:title="@string/logout"
         app:showAsAction="ifRoom"
         app:tint="@color/colorPrimary" />
-
 </menu>

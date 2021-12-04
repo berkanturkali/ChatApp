@@ -1,7 +1,6 @@
 package com.example.chatapp.adapter
 
 import android.graphics.Color
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,9 +8,9 @@ import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.example.chatapp.databinding.JoinItemLayoutBinding
-import com.example.chatapp.databinding.MessageFromItemLayoutBinding
-import com.example.chatapp.databinding.MessageToItemLayoutBinding
+import com.example.chatapp.databinding.JoinItemBinding
+import com.example.chatapp.databinding.MessageFromItemBinding
+import com.example.chatapp.databinding.MessageToItemBinding
 import com.example.chatapp.model.Message
 import com.example.chatapp.utils.*
 import java.util.*
@@ -37,7 +36,7 @@ class MessagesAdapter(val storageManager: StorageManager) :
         const val LOG_TYPE = 2
     }
 
-    inner class ReceiverViewHolder(private val binding: MessageFromItemLayoutBinding) :
+    inner class ReceiverViewHolder(private val binding: MessageFromItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(message: Message.TextMessage) {
             binding.apply {
@@ -64,7 +63,7 @@ class MessagesAdapter(val storageManager: StorageManager) :
         }
     }
 
-    inner class SenderViewHolder(private val binding: MessageToItemLayoutBinding) :
+    inner class SenderViewHolder(private val binding: MessageToItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(message: Message.TextMessage) {
             binding.apply {
@@ -98,7 +97,7 @@ class MessagesAdapter(val storageManager: StorageManager) :
         }
     }
 
-    inner class JoinViewHolder(private val binding: JoinItemLayoutBinding) :
+    inner class JoinViewHolder(private val binding: JoinItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(join: Message.LogMessage) {
             binding.apply {
@@ -110,21 +109,21 @@ class MessagesAdapter(val storageManager: StorageManager) :
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
             RECEIVER_TYPE -> ReceiverViewHolder(
-                MessageFromItemLayoutBinding.inflate(
+                MessageFromItemBinding.inflate(
                     LayoutInflater.from(parent.context),
                     parent,
                     false
                 )
             )
             SENDER_TYPE -> SenderViewHolder(
-                MessageToItemLayoutBinding.inflate(
+                MessageToItemBinding.inflate(
                     LayoutInflater.from(parent.context),
                     parent,
                     false
                 )
             )
             LOG_TYPE -> JoinViewHolder(
-                JoinItemLayoutBinding.inflate(
+                JoinItemBinding.inflate(
                     LayoutInflater.from(parent.context),
                     parent,
                     false

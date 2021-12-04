@@ -2,7 +2,9 @@ package com.example.chatapp.di.modules
 
 import android.content.Context
 import android.content.Intent
+import com.example.chatapp.network.AuthApi
 import com.example.chatapp.network.ChatApi
+import com.example.chatapp.network.UserApi
 import com.example.chatapp.utils.Constants
 import com.example.chatapp.utils.StorageManager
 import com.example.chatapp.view.MainActivity
@@ -83,8 +85,20 @@ object NetworkModule {
 
     @Singleton
     @Provides
-    fun provideRetroApi(retrofit: Retrofit): ChatApi {
+    fun provideChatApi(retrofit: Retrofit): ChatApi {
         return retrofit.create(ChatApi::class.java)
+    }
+
+    @Singleton
+    @Provides
+    fun provideUserApi(retrofit: Retrofit):UserApi{
+        return retrofit.create(UserApi::class.java)
+    }
+
+    @Singleton
+    @Provides
+    fun provideAuthApi(retrofit: Retrofit):AuthApi{
+        return retrofit.create(AuthApi::class.java)
     }
 
     @Provides

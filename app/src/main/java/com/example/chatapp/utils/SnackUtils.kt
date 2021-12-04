@@ -1,12 +1,13 @@
 package com.example.chatapp.utils
 
-import android.view.View
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
 import com.example.chatapp.R
 import com.google.android.material.snackbar.Snackbar
 
-fun View.showSnack(color: Int = R.color.colorDanger, message: String) {
-    Snackbar.make(this, message, Snackbar.LENGTH_LONG)
-        .setBackgroundTint(ContextCompat.getColor(this.context, color))
-        .show()
+fun Fragment.showSnack(message: String, color: Int = R.color.colorDanger) {
+    Snackbar.make(this.requireView(), message, Snackbar.LENGTH_LONG).run {
+        setBackgroundTint(ContextCompat.getColor(this@showSnack.requireContext(), color))
+        show()
+    }
 }

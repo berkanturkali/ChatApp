@@ -3,23 +3,23 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph.xml"
-    app:startDestination="@id/fragmentAuthMain">
+    app:startDestination="@id/loginSignupOptionsFragment">
 
     <fragment
-        android:id="@+id/fragmentAuthMain"
-        android:name="com.example.chatapp.view.authflow.FragmentAuthMain"
-        android:label="FragmentAuthMain"
-        tools:layout="@layout/fragment_auth_main_layout">
+        android:id="@+id/loginSignupOptionsFragment"
+        android:name="com.example.chatapp.view.authflow.LoginSignupOptionsFragment"
+        android:label=""
+        tools:layout="@layout/fragment_login_signup_options">
         <action
-            android:id="@+id/action_fragmentAuthMain_to_fragmentSignup"
-            app:destination="@id/fragmentSignup"
+            android:id="@+id/action_loginSignupOptionsFragment_to_signupFragment"
+            app:destination="@id/signupFragment"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right" />
         <action
             android:id="@+id/action_fragmentAuthMain_to_fragmentLogin"
-            app:destination="@id/fragmentLogin"
+            app:destination="@id/loginFragment"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
@@ -27,20 +27,26 @@
     </fragment>
 
     <fragment
-        android:id="@+id/fragmentSignup"
-        android:name="com.example.chatapp.view.authflow.FragmentSignup"
-        android:label="FragmentSignup"
-        tools:layout="@layout/fragment_signup_layout" />
+        android:id="@+id/signupFragment"
+        android:name="com.example.chatapp.view.authflow.SignupFragment"
+        android:label=""
+        tools:layout="@layout/fragment_signup" >
+        <action
+            android:id="@+id/action_signupFragment_to_loginFragment"
+            app:destination="@id/loginFragment"
+            app:popUpTo="@id/loginSignupOptionsFragment"
+            app:popUpToInclusive="false" />
+    </fragment>
 
     <fragment
-        android:id="@+id/fragmentLogin"
-        android:name="com.example.chatapp.view.authflow.FragmentLogin"
+        android:id="@+id/loginFragment"
+        android:name="com.example.chatapp.view.authflow.LoginFragment"
         android:label="FragmentLogin"
-        tools:layout="@layout/fragment_login_layout">
+        tools:layout="@layout/fragment_login">
         <action
-            android:id="@+id/action_fragmentLogin_to_fragmentHomeMain"
-            app:destination="@id/fragmentHomeMain"
-            app:popUpTo="@id/fragmentLogin"
+            android:id="@+id/action_loginFragment_to_homeFlowContainerFragment"
+            app:destination="@id/homeFlowContainerFragment"
+            app:popUpTo="@id/loginFragment"
             app:popUpToInclusive="true"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
@@ -48,22 +54,21 @@
             app:popExitAnim="@anim/slide_out_right" />
     </fragment>
     <fragment
-        android:id="@+id/fragmentHomeMain"
+        android:id="@+id/homeFlowContainerFragment"
         android:name="com.example.chatapp.view.homeflow.HomeFlowContainerFragment"
-        android:label="FragmentHomeMain"
-        tools:layout="@layout/fragment_home_flow_container_layout" >
+        android:label=""
+        tools:layout="@layout/fragment_home_flow_container" >
     <action
-        android:id="@+id/action_FragmentHomeMain_to_fragmentAuthMain"
-        app:destination="@id/fragmentAuthMain"
+        android:id="@+id/action_homeFlowContainerFragment_to_loginSignupOptionsFragment"
+        app:destination="@id/loginSignupOptionsFragment"
         app:enterAnim="@anim/slide_in_left"
         app:exitAnim="@anim/slide_out_right"
         app:launchSingleTop="true"
         app:popEnterAnim="@anim/slide_in_right"
         app:popExitAnim="@anim/slide_out_left"
         app:popUpToInclusive="true"
-        app:popUpTo="@id/fragmentHomeMain"
+        app:popUpTo="@id/homeFlowContainerFragment"
         />
     </fragment>
-
 
 </navigation>

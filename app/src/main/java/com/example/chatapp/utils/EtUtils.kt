@@ -1,28 +1,11 @@
 package com.example.chatapp.utils
 
-import android.text.Editable
-import android.text.TextWatcher
 import androidx.core.util.PatternsCompat
 import com.google.android.material.textfield.TextInputEditText
 
-fun TextInputEditText.afterTextChanged(afterTextChanged: (String) -> Unit) {
-    this.addTextChangedListener(object : TextWatcher {
-        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+fun TextInputEditText.trim() = text.toString().trim()
 
-        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
-
-        override fun afterTextChanged(s: Editable?) {
-            afterTextChanged.invoke(s.toString())
-        }
-    })
-}
-
-fun TextInputEditText.validate(message: String?, validator: (String) -> Boolean) {
-    this.afterTextChanged {
-        this.error = if (validator(it)) null else message
-    }
-    this.error = if (validator(this.text.toString())) null else message
-}
+fun TextInputEditText.text() = text.toString()
 
 fun String.isValidEmail(): Boolean =
     this.isNotEmpty() && PatternsCompat.EMAIL_ADDRESS.matcher(this).matches()
@@ -30,4 +13,12 @@ fun String.isValidEmail(): Boolean =
 fun String.isValidPassword(): Boolean =
     this.isNotEmpty() && this.length > 6
 
-fun String.isValid():Boolean = this.isNotEmpty()
+fun String.isValid(): Boolean = this.isNotEmpty()
+
+enum class InputType(val message: String) {
+    EMAIL("Please provide a valid email."),
+    PASSWORD("Password length must be greater than 6 characters."),
+    FIRSTNAME("Please provide a valid firstname."),
+    LASTNAME("Please provide a valid lastname."),
+    ROOM("Room name must not be empty.")
+}

@@ -10,9 +10,5 @@ data class User(
     val lastname: String,
     val email: String,
     val password: String,
-    val interests: MutableList<String> = mutableListOf(),
-    val photo: String = "",
-    var aboutMe: String = "",
     var _id: String = "",
-    val online: Boolean = false
 ) : Parcelable

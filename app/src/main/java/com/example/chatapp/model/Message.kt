@@ -1,6 +1,7 @@
 package com.example.chatapp.model
 
 sealed class Message {
+
     data class TextMessage(
         val message: String,
         val sender: String,

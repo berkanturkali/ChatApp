@@ -3,9 +3,26 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.23252279635258358" />
+        <entry key="app/src/main/res/layout/drawer_header.xml" value="0.39260385005065856" />
+        <entry key="app/src/main/res/layout/fragment_add_room.xml" value="0.22441742654508612" />
+        <entry key="app/src/main/res/layout/fragment_home_flow_container.xml" value="0.23252279635258358" />
         <entry key="app/src/main/res/layout/fragment_home_main_layout.xml" value="0.2317629179331307" />
+        <entry key="app/src/main/res/layout/fragment_login.xml" value="0.24316109422492402" />
+        <entry key="app/src/main/res/layout/fragment_login_signup_options.xml" value="0.22" />
+        <entry key="app/src/main/res/layout/fragment_messages.xml" value="0.20491388044579534" />
         <entry key="app/src/main/res/layout/fragment_messages_layout.xml" value="0.20185185185185187" />
+        <entry key="app/src/main/res/layout/fragment_profile.xml" value="0.22441742654508612" />
+        <entry key="app/src/main/res/layout/fragment_rooms.xml" value="0.22441742654508612" />
+        <entry key="app/src/main/res/layout/fragment_signup.xml" value="0.2" />
+        <entry key="app/src/main/res/layout/header.xml" value="0.39260385005065856" />
         <entry key="app/src/main/res/layout/header_layout.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/join_item.xml" value="0.22239108409321176" />
+        <entry key="app/src/main/res/layout/message_from_item.xml" value="0.22239108409321176" />
+        <entry key="app/src/main/res/layout/message_to_item.xml" value="0.22239108409321176" />
+        <entry key="app/src/main/res/layout/messages_load_state_footer_view_item.xml" value="0.23252279635258358" />
+        <entry key="app/src/main/res/layout/my_chip.xml" value="0.22239108409321176" />
+        <entry key="app/src/main/res/layout/room_item.xml" value="0.20491388044579534" />
         <entry key="app/src/main/res/menu/drawer_menu.xml" value="0.2965986394557823" />
       </map>
     </option>

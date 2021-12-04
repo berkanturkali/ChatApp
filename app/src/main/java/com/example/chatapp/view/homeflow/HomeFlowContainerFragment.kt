@@ -5,36 +5,33 @@ import android.view.View
 import android.widget.TextView
 import androidx.activity.addCallback
 import androidx.drawerlayout.widget.DrawerLayout
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.NavController
+import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
+import androidx.navigation.ui.setupWithNavController
 import com.example.chatapp.R
-import com.example.chatapp.databinding.FragmentHomeFlowContainerLayoutBinding
+import com.example.chatapp.databinding.FragmentHomeFlowContainerBinding
 import com.example.chatapp.model.User
-import com.example.chatapp.utils.*
-import com.example.chatapp.viewmodel.homeflow.FragmentHomeMainViewModel
+import com.example.chatapp.utils.StorageManager
+import com.example.chatapp.utils.showSnack
+import com.example.chatapp.view.BaseFragment
+import com.example.chatapp.viewmodel.homeflow.HomeFlowContainerViewModel
 import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
 import io.socket.client.Socket
 import javax.inject.Inject
 
-private const val TAG = "FragmentHomeMain"
-
 @AndroidEntryPoint
-class HomeFlowContainerFragment : Fragment(R.layout.fragment_home_flow_container_layout), OnLogoutClick {
+class HomeFlowContainerFragment :
+    BaseFragment<FragmentHomeFlowContainerBinding>(FragmentHomeFlowContainerBinding::inflate) {
 
-    private var _binding: FragmentHomeFlowContainerLayoutBinding? = null
-    private val binding get() = _binding!!
-    private val mViewModel: FragmentHomeMainViewModel by viewModels()
-
-    private var receiver: String? = null
+    private val mViewModel by viewModels<HomeFlowContainerViewModel>()
 
     private lateinit var drawerLayout: DrawerLayout
     private lateinit var headerView: View
-    private val drawerSelectedItemIdKey = "DRAWER_SELECTED_ITEM_ID_KEY"
-    private var drawerSelectedItemId = R.id.rooms
-    private var title: String? = null
 
     @Inject
     lateinit var storageManager: StorageManager
@@ -43,25 +40,17 @@ class HomeFlowContainerFragment : Fragment(R.layout.fragment_home_flow_container
     lateinit var socket: Socket
 
     @Inject
-    lateinit var gson : Gson
+    lateinit var gson: Gson
+
+    private lateinit var navController: NavController
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        _binding = FragmentHomeFlowContainerLayoutBinding.bind(view)
-        savedInstanceState?.let {
-            drawerSelectedItemId = it.getInt(drawerSelectedItemIdKey, drawerSelectedItemId)
-        }
-        mViewModel.getMe()
         headerView = binding.navView.getHeaderView(0)
         setupDrawer()
         setBackPressedHandler()
         connectSocket()
         subscribeObservers()
-    }
-
-    override fun onSaveInstanceState(outState: Bundle) {
-        outState.putInt(drawerSelectedItemIdKey, drawerSelectedItemId)
-        super.onSaveInstanceState(outState)
     }
 
     private fun connectSocket() {
@@ -79,12 +68,9 @@ class HomeFlowContainerFragment : Fragment(R.layout.fragment_home_flow_container
                     setFields(it.data!!)
                 },
                 errorFunc = {
-                    binding.root.showSnack(R.color.colorDanger, it.message!!)
+                    showSnack(it.message!!)
                 }
             )
-        }
-        mViewModel.receiver.observe(viewLifecycleOwner) {
-            receiver = it
         }
     }
 
@@ -96,41 +82,6 @@ class HomeFlowContainerFragment : Fragment(R.layout.fragment_home_flow_container
                 user.lastname
             )
         headerView.findViewById<TextView>(R.id.emailTv).text = user.email
-
-    }
-
-
-    private fun setupDrawer() {
-        drawerLayout = binding.drawerLayout
-        val navView = binding.navView
-        val toolbar = binding.drawerToolbar
-        val navGraphIds =
-            listOf(
-                R.navigation.rooms,
-                R.navigation.add_room,
-                R.navigation.profile
-            )
-        val controller = navView.setupWithNavController(
-            navGraphIds = navGraphIds,
-            fragmentManager = childFragmentManager,
-            containerId = R.id.drawer_container,
-            currentItemId = drawerSelectedItemId,
-            parentNavController = findNavController(),
-            intent = requireActivity().intent,
-            onLogoutClick = this
-        )
-        controller.observe(viewLifecycleOwner) { navController ->
-            NavigationUI.setupWithNavController(
-                toolbar,
-                navController,
-                drawerLayout
-            )
-            drawerSelectedItemId = navController.graph.id
-            navController.addOnDestinationChangedListener { _, destination, _ ->
-                title = destination.label.toString()
-                binding.drawerToolbarTitle.text = title
-            }
-        }
     }
 
     private fun setBackPressedHandler() {
@@ -141,14 +92,33 @@ class HomeFlowContainerFragment : Fragment(R.layout.fragment_home_flow_container
         }
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-        storageManager.clearSharedPref()
-        socket.close()
+    private fun setupDrawer() {
+        drawerLayout = binding.drawerLayout
+        val navView = binding.navView
+        val toolbar = binding.drawerToolbar
+        val navHostFragment =
+            childFragmentManager.findFragmentById(R.id.drawer_container) as NavHostFragment
+        navController = navHostFragment.navController
+        val appBarConfiguration = AppBarConfiguration(setOf(R.id.roomsFragment), drawerLayout)
+        navView.setupWithNavController(navController)
+        NavigationUI.setupWithNavController(toolbar, navController, drawerLayout)
+        toolbar.setupWithNavController(navController, appBarConfiguration)
+        binding.navView.menu.findItem(R.id.logout).setOnMenuItemClickListener {
+            logout()
+            true
+        }
     }
 
-    override fun onLogoutClick() {
-        findNavController().navigate(R.id.action_FragmentHomeMain_to_fragmentAuthMain)
+    private fun logout(){
+        storageManager.clearSharedPref()
+        findNavController().navigate(R.id.action_homeFlowContainerFragment_to_loginSignupOptionsFragment)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        storageManager.clearSharedPref()
+        socket.off("update")
+        socket.close()
+
     }
 }

@@ -10,7 +10,7 @@ fun ImageView.load(
 ) {
     Glide
         .with(context)
-        .load("${BuildConfig.BASE_URL}/$url")
+        .load("${BuildConfig.BASE_URL}$url")
         .error(R.mipmap.ic_launcher_round)
         .into(this)
 }
