@@ -39,6 +39,18 @@
         <argument
             android:name="room"
             app:argType="string" />
+        <action
+            android:id="@+id/action_messagesFragment_to_unsendMessageDialog"
+            app:destination="@id/unsendMessageDialog" />
     </fragment>
+    <dialog
+        android:id="@+id/unsendMessageDialog"
+        android:name="com.example.chatapp.view.homeflow.UnsendMessageDialog"
+        android:label=""
+        tools:layout="@layout/dialog_unsend_message">
+        <argument
+            android:name="id"
+            app:argType="string" />
+    </dialog>
 
 </navigation>

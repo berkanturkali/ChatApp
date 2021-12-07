@@ -4,6 +4,8 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.23252279635258358" />
+        <entry key="app/src/main/res/layout/dialog_delete_message.xml" value="0.22036474164133737" />
+        <entry key="app/src/main/res/layout/dialog_unsend_message.xml" value="0.22036474164133737" />
         <entry key="app/src/main/res/layout/drawer_header.xml" value="0.39260385005065856" />
         <entry key="app/src/main/res/layout/fragment_add_room.xml" value="0.22441742654508612" />
         <entry key="app/src/main/res/layout/fragment_home_flow_container.xml" value="0.23252279635258358" />

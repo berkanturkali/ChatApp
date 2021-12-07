@@ -107,9 +107,15 @@ class HomeFlowContainerFragment :
             logout()
             true
         }
+        navController.addOnDestinationChangedListener { controller, destination, arguments ->
+            val title =
+                if (destination.id == R.id.messagesFragment) MessagesFragmentArgs.fromBundle(
+                    arguments!!).room else destination.label
+            binding.drawerToolbar.title = title
+        }
     }
 
-    private fun logout(){
+    private fun logout() {
         storageManager.clearSharedPref()
         findNavController().navigate(R.id.action_homeFlowContainerFragment_to_loginSignupOptionsFragment)
     }

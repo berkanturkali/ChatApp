@@ -26,4 +26,6 @@
     <string name="login_success_message">Logged in successfully.</string>
     <string name="room_name">Room Name</string>
     <string name="add_room">Add Room</string>
+    <string name="delete">Delete</string>
+    <string name="unsend">Unsend</string>
 </resources>

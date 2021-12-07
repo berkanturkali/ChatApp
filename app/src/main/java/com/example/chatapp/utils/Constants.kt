@@ -15,4 +15,5 @@ object Constants {
     const val FULL_NAME = "fullname"
     const val TIME_PATTERN = "HH:mm"
     const val DATE_PATTERN = "dd/MM/yyyy"
+    const val MESSAGE_ID = "message_id"
 }

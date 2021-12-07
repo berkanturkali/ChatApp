@@ -8,12 +8,13 @@ sealed class Message {
         val room: String,
         var createdAt: Long = 0,
         val receiver: String? = null,
-        val isPrivate: Boolean = false
+        val isPrivate: Boolean = false,
+        var _id: String? = null,
     ) : Message()
 
     data class LogMessage(
         val type: String,
-        val content: String
+        val content: String,
     ) : Message()
 }
 

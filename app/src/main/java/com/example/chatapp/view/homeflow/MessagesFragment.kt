@@ -5,16 +5,19 @@ import android.text.Editable
 import android.text.TextUtils
 import android.text.TextWatcher
 import android.view.View
-import androidx.appcompat.widget.Toolbar
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.chatapp.R
 import com.example.chatapp.adapter.MessagesAdapter
 import com.example.chatapp.databinding.FragmentMessagesBinding
 import com.example.chatapp.model.Message
+import com.example.chatapp.model.OnItemLongClickListener
+import com.example.chatapp.utils.Constants.MESSAGE_ID
 import com.example.chatapp.utils.StorageManager
+import com.example.chatapp.utils.getNavigationResult
 import com.example.chatapp.utils.showSnack
 import com.example.chatapp.view.BaseFragment
 import com.example.chatapp.viewmodel.homeflow.MessagesFragmentViewModel
@@ -30,7 +33,8 @@ import javax.inject.Inject
 private const val TAG = "MessagesFragment"
 
 @AndroidEntryPoint
-class MessagesFragment : BaseFragment<FragmentMessagesBinding>(FragmentMessagesBinding::inflate) {
+class MessagesFragment : BaseFragment<FragmentMessagesBinding>(FragmentMessagesBinding::inflate),
+    OnItemLongClickListener<Message.TextMessage> {
 
     private val args: MessagesFragmentArgs by navArgs()
 
@@ -61,8 +65,6 @@ class MessagesFragment : BaseFragment<FragmentMessagesBinding>(FragmentMessagesB
         listenMessages()
         typingObject.put("room", args.room)
         initButtons()
-        requireParentFragment().requireParentFragment().requireView()
-            .findViewById<Toolbar>(R.id.drawer_toolbar).title = args.room
         subscribeObservers()
         binding.messageEt.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
@@ -98,6 +100,9 @@ class MessagesFragment : BaseFragment<FragmentMessagesBinding>(FragmentMessagesB
                 }
             )
         }
+        getNavigationResult<String>(R.id.messagesFragment, MESSAGE_ID) { id ->
+            socket.emit("unsend", id)
+        }
     }
 
     private fun listenTypingEvent() {
@@ -131,6 +136,7 @@ class MessagesFragment : BaseFragment<FragmentMessagesBinding>(FragmentMessagesB
 
     private fun initMessageRv() {
         messagesAdapter = MessagesAdapter(storageManager)
+        messagesAdapter.setListener(this)
         binding.messageRv.apply {
             adapter = messagesAdapter
             setHasFixedSize(true)
@@ -165,6 +171,22 @@ class MessagesFragment : BaseFragment<FragmentMessagesBinding>(FragmentMessagesB
             messagesAdapter.notifyItemInserted(messages.size - 1)
             binding.messageRv.post {
                 binding.messageRv.scrollToPosition(messagesAdapter.itemCount - 1)
+            }
+        }
+        socket.on("deletedMessageId") {
+            val deletedMessageId = it[0].toString()
+            if (deletedMessageId != "-1") {
+                if (messages.isNotEmpty()) {
+                    messages.first { message ->
+                        (message is Message.TextMessage && message._id == deletedMessageId)
+                    }.apply {
+                        val index = messagesAdapter.currentList.indexOf(this)
+                        messages.removeAt(index)
+                        messagesAdapter.notifyItemRemoved(index)
+                    }
+                }
+            } else {
+                showSnack("Something went wrong.")
             }
         }
     }
@@ -205,6 +227,13 @@ class MessagesFragment : BaseFragment<FragmentMessagesBinding>(FragmentMessagesB
         socket.off("joinEvent")
         socket.off("leaveEvent")
         socket.off("updateMembers")
+        socket.off("deletedMessageId")
         messages.clear()
+    }
+
+    override fun onItemLongClickListener(item: Message.TextMessage) {
+        val action =
+            MessagesFragmentDirections.actionMessagesFragmentToUnsendMessageDialog(item._id!!)
+        findNavController().navigate(action)
     }
 }
